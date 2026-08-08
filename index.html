@@ -141,7 +141,7 @@
         .map-wrapper {
             position: relative;
             width: 100%;
-            height: 620px; /* Biraz daha genişletildi */
+            height: 620px;
             border-radius: 12px;
             overflow: hidden;
             background: #aadaff;
@@ -174,7 +174,7 @@
             border-color: var(--eu-blue);
         }
 
-        /* LİMAN DETAY MODALI (MARINETRAFFIC IFRAME) */
+        /* LİMAN DETAY MODALI (MARINETRAFFIC) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
@@ -356,9 +356,7 @@
                 <span id="modalPortTitle"><i class="fas fa-ship"></i> Liman Gemi Trafiği</span>
                 <button class="modal-close" onclick="closePortModal()"><i class="fas fa-times"></i></button>
             </div>
-            <div class="modal-body" id="modalPortBody">
-                <!-- MarineTraffic Iframe dinamik yüklenecek -->
-            </div>
+            <div class="modal-body" id="modalPortBody"></div>
         </div>
     </div>
 
@@ -441,7 +439,7 @@
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
-        // Karadeniz Havzası Odaklı Genişletilmiş Sınırlar
+        // Karadeniz Havzası Odaklı Sınırlar
         const blackSeaExtent = ol.proj.transformExtent([25.0, 39.0, 45.0, 48.0], 'EPSG:4326', 'EPSG:3857');
 
         const map = new ol.Map({
@@ -451,16 +449,29 @@
                     source: new ol.source.OSM()
                 })
             ],
+            // Sayfa akışını bozmamak için haritada scroll zoom varsayılan olarak kilitlenir, 
+            // kullanıcı haritaya tıkladıktan sonra zoom yapabilir.
+            interactions: ol.interaction.defaults.defaults({mouseWheelZoom: false}),
             view: new ol.View({
                 center: ol.proj.fromLonLat([34.0, 42.5]),
                 zoom: 6.0,
-                minZoom: 5,
+                minZoom: 5.5, // Zoom-out sınırı (Karadeniz dışına taşmayı engeller)
                 maxZoom: 10,
                 extent: blackSeaExtent
             })
         });
 
-        // Liman Verileri (Koordinatlar, İsimler ve Merkez Enlem/Boylamlar)
+        // Kullanıcı haritaya tıklayınca/dokununca mouse tekerleğiyle zoom aktif olur
+        let mapEl = document.getElementById('map');
+        mapEl.addEventListener('click', function() {
+            map.getInteractions().forEach(function(interaction) {
+                if (interaction instanceof ol.interaction.MouseWheelZoom) {
+                    interaction.setActive(true);
+                }
+            });
+        });
+
+        // Liman Verileri ve Doğru Çapa İkonu (`\f56f` FontAwesome Anchor kodu)
         const portsData = [
             { name: "Samsun Limanı (TR)", lon: 36.33, lat: 41.28 },
             { name: "Varna Limanı (BG)", lon: 27.91, lat: 43.21 },
@@ -477,7 +488,6 @@
         const vectorLayer = new ol.layer.Vector({ source: vectorSource, zIndex: 10 });
         map.addLayer(vectorLayer);
 
-        // Mavi Top ve Beyaz Çapa İkon Stili (HTML/CSS tabanlı şık marker)
         portsData.forEach(port => {
             const feature = new ol.Feature({
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([port.lon, port.lat])),
@@ -488,13 +498,13 @@
 
             feature.setStyle(new ol.style.Style({
                 image: new ol.style.Circle({
-                    radius: 12,
+                    radius: 13,
                     fill: new ol.style.Fill({ color: '#003399' }), // AB Mavisi Top
                     stroke: new ol.style.Stroke({ color: '#FFCC00', width: 2 }) // AB Sarısı Çerçeve
                 }),
                 text: new ol.style.Text({
-                    text: '\uf2cd', // FontAwesome Çapa (Anchor) Kodu
-                    font: '900 12px "Font Awesome 6 Free"',
+                    text: '\uf13d', // Doğru FontAwesome Çapa (Anchor) Unicode Kodu
+                    font: '900 13px "Font Awesome 6 Free"',
                     fill: new ol.style.Fill({ color: '#FFFFFF' }), // Beyaz Çapa
                     textAlign: 'center',
                     textBaseline: 'middle'
@@ -519,7 +529,6 @@
 
                 document.getElementById('modalPortTitle').innerHTML = `<i class="fas fa-ship" style="color:var(--eu-gold);"></i> ${name} - Canlı Gemi Trafiği`;
                 
-                // Ücretsiz ve Akıllı MarineTraffic Iframe Entegrasyonu
                 document.getElementById('modalPortBody').innerHTML = `
                     <iframe src="https://www.marinetraffic.com/en/ais/embed/zoom:12/centery:${lat}/centerx:${lon}/maptype:1/shownames:true/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:false/remember:false"></iframe>
                 `;
