@@ -146,7 +146,7 @@
         .map-wrapper {
             position: relative;
             width: 100%;
-            height: 500px;
+            height: 570px;
             border-radius: 12px;
             overflow: hidden;
             background: #aadaff;
@@ -189,63 +189,72 @@
         .widget-card {
             background: var(--white);
             border-radius: 16px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             position: relative;
             overflow: hidden;
+            border-top: 4px solid var(--eu-blue);
         }
-        .widget-card.eu-theme {
-            background: var(--eu-blue);
-            color: var(--white);
-        }
-        .widget-card.eu-theme .card-header { color: var(--eu-gold); }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        .news-list, .events-list {
+            display: flex;
+            flex-direction: column;
             gap: 15px;
             margin-top: 15px;
         }
-        .stat-box {
-            background: var(--bg-gray);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .eu-theme .stat-box {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .stat-val {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--eu-blue);
-        }
-        .eu-theme .stat-val { color: var(--white); }
-        .stat-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            font-weight: 600;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-        .eu-theme .stat-label { color: var(--eu-light-blue); }
 
-        .action-btn {
-            width: 100%;
-            background: var(--eu-gold);
-            color: var(--eu-blue);
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-family: 'Montserrat', sans-serif;
-            margin-top: 15px;
+        .news-item, .event-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
         }
-        .action-btn:hover { background: #FFD633; }
+        .news-item:last-child, .event-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .news-item:hover h5, .event-item:hover h5 {
+            color: var(--eu-blue);
+        }
+
+        .news-date-badge {
+            background: var(--eu-light-blue);
+            color: var(--eu-blue);
+            padding: 6px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+        .event-date-badge {
+            background: #fef3c7;
+            color: #d97706;
+            padding: 6px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .item-content h5 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        .item-content p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+        }
 
         /* ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI (FULL SCREEN WORKSPACE) */
         .ai-workspace-modal {
@@ -458,41 +467,53 @@
             </div>
         </div>
 
-        <!-- SAĞ SÜTUN: WIDGETLAR -->
+        <!-- SAĞ SÜTUN: HABERLER VE YAKLAŞAN ETKİNLİKLER -->
         <div class="widgets-column">
             
-            <!-- HACKATHON WIDGET -->
-            <div class="widget-card eu-theme">
+            <!-- HABERLER WIDGET -->
+            <div class="widget-card">
                 <div class="card-header">
-                    <i class="fas fa-laptop-code"></i> Genç Lojistikçiler Hackathonu
+                    <span><i class="fas fa-newspaper" style="color: var(--eu-blue);"></i> Güncel Haberler</span>
                 </div>
-                <p style="font-size: 13px; margin-top: 10px; opacity: 0.9;">Dijital beceriler ve sürdürülebilir sınır ötesi lojistik çözümleri üretiyoruz.</p>
-                <div class="stat-grid">
-                    <div class="stat-box">
-                        <div class="stat-val">24</div>
-                        <div class="stat-label">Genç Katılımcı</div>
+                <div class="news-list">
+                    <div class="news-item">
+                        <div class="news-date-badge">12 Haz</div>
+                        <div class="item-content">
+                            <h5>Lojistik İhtiyaç Analizi Odak Grup Toplantısı Gerçekleşti</h5>
+                            <p>Samsun TSO liderliğinde Varna ve Acara ortaklarıyla bölgesel darboğazlar masaya yatırıldı.</p>
+                        </div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-val">Samsun</div>
-                        <div class="stat-label">Etkinlik Merkezi</div>
+                    <div class="news-item">
+                        <div class="news-date-badge">05 Haz</div>
+                        <div class="item-content">
+                            <h5>Karadeniz Havzasında Yeni Ro-Ro Hattı</h5>
+                            <p>Samsun ile Poti Limanları arasında haftalık düzenli seferler için ön mutabakat sağlandı.</p>
+                        </div>
                     </div>
                 </div>
-                <button class="action-btn"><i class="fas fa-user-plus"></i> Başvuruları Görüntüle</button>
             </div>
 
-            <!-- MAVİ & YEŞİL EKONOMİ WIDGET -->
-            <div class="widget-card" style="border-top: 4px solid #10b981;">
-                <div class="card-header" style="color: #10b981;">
-                    <i class="fas fa-leaf"></i> Yeşil Lojistik & CO2 İndeksi
+            <!-- YAKLAŞAN ETKİNLİKLER WIDGET -->
+            <div class="widget-card" style="border-top-color: var(--eu-gold);">
+                <div class="card-header">
+                    <span><i class="fas fa-calendar-alt" style="color: #d97706;"></i> Yaklaşan Etkinlikler</span>
                 </div>
-                <p style="font-size: 13px; margin-top: 10px; color: var(--text-muted);">Sınır ötesi optimizasyonlar ile engellenen karbon salınımı takibi.</p>
-                <div class="stat-grid" style="grid-template-columns: 1fr;">
-                    <div class="stat-box" style="background: #ecfdf5; border: 1px solid #a7f3d0;">
-                        <div class="stat-val" style="color: #059669; font-size: 32px;">1,425 <span style="font-size: 16px;">Ton</span></div>
-                        <div class="stat-label" style="color: #047857;">Önlenen CO2 Emisyonu</div>
+                <div class="events-list">
+                    <div class="event-item">
+                        <div class="event-date-badge">28 Tem</div>
+                        <div class="item-content">
+                            <h5>Dijital Beceriler ve Yeşil Lojistik Atölyesi</h5>
+                            <p>Varna Oda ev sahipliğinde çevrim içi hibrit oturum ve sektörel değerlendirme.</p>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date-badge">15 Ağu</div>
+                        <div class="item-content">
+                            <h5>Genç Lojistikçiler Hackathonu Başlangıcı</h5>
+                            <p>Samsun'da düzenlenecek 3 günlük yenilikçi yazılım ve veri yarışması maratonu.</p>
+                        </div>
                     </div>
                 </div>
-                <button class="action-btn" style="background: #10b981; color: white;"><i class="fas fa-route"></i> Akıllı Rota Planlayıcıyı Aç</button>
             </div>
 
         </div>
