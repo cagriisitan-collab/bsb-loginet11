@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Detayı | BSB-LOGINET</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --eu-blue: #003399;
+            --eu-gold: #FFCC00;
+            --eu-light-blue: #E6F0FA;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --bg-gray: #F4F7F9;
+            --white: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--white);
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            box-shadow: 0 4px 15px rgba(0, 51, 153, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo-group { display: flex; align-items: center; gap: 20px; }
+        .eu-flag { font-size: 32px; color: var(--eu-blue); display: flex; align-items: center; gap: 10px; border-right: 2px solid var(--border-color); padding-right: 20px; }
+        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 800; color: var(--eu-blue); line-height: 1.1; }
+        .logo-text span { color: var(--eu-gold); display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .desktop-nav { display: flex; gap: 10px; align-items: center; }
+        .desktop-nav a { text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 13px; padding: 10px 14px; border-radius: 8px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .desktop-nav a:hover { background: var(--eu-light-blue); color: var(--eu-blue); }
+
+        /* İÇERİK DETAY ALANI */
+        .article-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px 50px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--eu-gold);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--eu-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        .article-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--eu-blue);
+            line-height: 1.3;
+            margin-bottom: 15px;
+        }
+        .article-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            display: flex;
+            gap: 25px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+        .article-meta i { color: #d97706; }
+
+        .article-img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .article-content {
+            font-size: 15px;
+            color: #334155;
+            line-height: 1.8;
+        }
+        .article-content p { margin-bottom: 20px; }
+
+        .register-box {
+            background: var(--eu-light-blue);
+            border: 1px solid #bae6fd;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .register-box p { margin: 0; font-weight: 600; color: var(--eu-blue); }
+        .register-btn {
+            background: var(--eu-blue);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .register-btn:hover { background: #002266; }
+
+        /* FOOTER */
+        .eu-footer {
+            background: var(--eu-blue); color: var(--white); padding: 40px 5%;
+            margin-top: 60px; display: flex; align-items: center; gap: 30px;
+        }
+        .eu-footer p { font-size: 12px; opacity: 0.9; margin: 0; }
+        .eu-footer h4 { font-family: 'Montserrat', sans-serif; font-size: 16px; margin-bottom: 5px; color: var(--eu-gold); }
+
+        @media (max-width: 768px) {
+            .article-container { padding: 20px; margin: 20px; }
+            .article-img { height: 250px; }
+            .register-box { flex-direction: column; gap: 15px; text-align: center; }
+            .desktop-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- KURUMSAL BAŞLIK -->
+    <header class="header">
+        <div class="logo-group">
+            <div class="eu-flag"><i class="fas fa-flag-eu"></i></div>
+            <div class="logo-text">BSB-LOGINET<br><span>Interreg NEXT Black Sea Basin</span></div>
+        </div>
+        <nav class="desktop-nav">
+            <a href="index.html"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="etkinlikler.html"><i class="fas fa-calendar-alt"></i> Etkinlikler</a>
+            <a href="bsb-connect.html" style="background: var(--eu-gold); color: var(--eu-blue); font-weight:700;"><i class="fas fa-handshake"></i> B2B</a>
+        </nav>
+    </header>
+
+    <!-- ETKİNLİK DETAY GÖVDESİ -->
+    <main class="article-container">
+        <a href="etkinlikler.html" class="back-link"><i class="fas fa-arrow-left"></i> Etkinlikler Listesine Dön</a>
+        
+        <h1 class="article-title" id="eventTitle">Etkinlik Başlığı Yükleniyor...</h1>
+        
+        <div class="article-meta">
+            <div><i class="far fa-clock"></i> <span id="eventDate">28 Temmuz 2026, 14:00</span></div>
+            <div><i class="fas fa-map-marker-alt"></i> <span id="eventLoc">Çevrim İçi (Hybrid / Varna TSO)</span></div>
+        </div>
+
+        <img src="" id="eventImg" class="article-img" alt="Etkinlik Görseli">
+
+        <div class="article-content" id="eventBody">
+            <p>İçerik yükleniyor...</p>
+        </div>
+
+        <div class="register-box">
+            <div>
+                <p>Bu etkinliğe katılım ücretsizdir ancak kayıt zorunludur.</p>
+                <small style="color: var(--text-muted);">Kontenjan sınırlandırılması bulunmaktadır.</small>
+            </div>
+            <button class="register-btn" onclick="alert('Etkinlik kayıt formuna yönlendiriliyorsunuz.')">Hemen Kayıt Ol</button>
+        </div>
+    </main>
+
+    <!-- AB GÖRÜNÜRLÜK FOOTER -->
+    <footer class="eu-footer">
+        <i class="fas fa-flag-eu" style="font-size: 64px;"></i>
+        <div>
+            <h4>Black Sea Basin Sustainable Logistics and Cooperation Network (BSB-LOGINET)</h4>
+            <p>Bu platform, Avrupa Birliği'nin finansal desteğiyle Interreg NEXT Karadeniz Havzası Programı kapsamında yürütülmektedir. Proje lideri Samsun Ticaret ve Sanayi Odası (Türkiye), ortakları Varna TSO (Bulgaristan) ve Acara TSO'dur (Gürcistan).</p>
+        </div>
+    </footer>
+
+    <script>
+        // Etkinlikler Veritabanı (Demo Altyapısı)
+        const eventsDatabase = {
+            "1": {
+                title: "Dijital Beceriler ve Yeşil Lojistik Çevrim İçi Atölye Çalışması",
+                date: "28 Temmuz 2026, 14:00 - 17:00",
+                location: "Çevrim İçi / Hibrit Oturum",
+                image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200",
+                content: `
+                    <p>Interreg NEXT Karadeniz Havzası Programı BSB-LOGINET projesi kapsamında düzenlenecek olan <strong>Dijital Beceriler ve Yeşil Lojistik Atölyesi</strong>, bölgedeki KOBİ'lerin ve lojistik operatörlerinin dijital dönüşüm süreçlerini hızlandırmayı amaçlamaktadır.</p>
+                    <p>Oturum boyunca, Avrupa Yeşil Mutabakatı uyumlu lojistik operasyonlar, karbon ayak izi azaltım stratejileri ve yapay zeka destekli rota optimizasyon araçları uygulamalı olarak ele alınacaktır. Varna Ticaret ve Sanayi Odası ev sahipliğinde gerçekleştirilecek toplantıda uluslararası uzmanlar konuşmacı olarak yer alacaktır.</p>
+                    <p>Atölye sonunda katılımcılara dijital katılım belgesi takdim edilecek olup, elde edilen çıktılar projenin eylem planına entegre edilecektir.</p>
+                `
+            },
+            "2": {
+                title: "Genç Lojistikçiler Hackathonu Başlangıç ve Mentorluk Kampı",
+                date: "15 Ağustos 2026, 09:00",
+                location: "Samsun Teknopark & Samsun TSO Konferans Salonu",
+                image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1200",
+                content: `
+                    <p>Karadeniz havzasında sınır ötesi lojistik ve tedarik zinciri problemlerine yenilikçi dijital çözümler üretmek amacıyla düzenlenen <strong>Genç Lojistikçiler Hackathonu</strong> start alıyor!</p>
+                    <p>Türkiye, Bulgaristan ve Gürcistan'dan yazılımcıların, mühendislik öğrencilerinin ve girişimcilerin bir araya geleceği 3 günlük maratonda, yapay zeka tabanlı gümrük sorgulama sistemleri ve yeşil lojistik uygulamaları yarışacak.</p>
+                `
+            }
+        };
+
+        // URL'den ID parametresini yakala (Örn: etkinlik-detay.html?id=1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id') || "1";
+
+        // Veritabanından ilgili etkinliği çek ve DOM'a bas
+        if (eventsDatabase[eventId]) {
+            document.getElementById('eventTitle').innerText = eventsDatabase[eventId].title;
+            document.getElementById('eventDate').innerText = eventsDatabase[eventId].date;
+            document.getElementById('eventLoc').innerText = eventsDatabase[eventId].location;
+            document.getElementById('eventImg').src = eventsDatabase[eventId].image;
+            document.getElementById('eventBody').innerHTML = eventsDatabase[eventId].content;
+        } else {
+            document.getElementById('eventTitle').innerText = "Etkinlik Bulunamadı";
+            document.getElementById('eventBody').innerHTML = "<p>Aradığınız etkinlik içeriği sistemde mevcut değil.</p>";
+        }
+    </script>
+</body>
+</html>
