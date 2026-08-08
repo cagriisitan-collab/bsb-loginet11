@@ -113,7 +113,7 @@
             cursor: pointer;
         }
 
-        /* KARADENİZ HAVZASI ODAKLI HARİTA ALANI */
+        /* GENİŞLETİLMİŞ HARİTA ALANI */
         .hero-map-section {
             padding: 20px 5% 0 5%;
             max-width: 1600px;
@@ -141,7 +141,7 @@
         .map-wrapper {
             position: relative;
             width: 100%;
-            height: 520px;
+            height: 620px; /* Biraz daha genişletildi */
             border-radius: 12px;
             overflow: hidden;
             background: #aadaff;
@@ -174,6 +174,29 @@
             border-color: var(--eu-blue);
         }
 
+        /* LİMAN DETAY MODALI (MARINETRAFFIC IFRAME) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 3000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-box {
+            background: white; width: 100%; max-width: 900px; height: 600px;
+            border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column; overflow: hidden; transform: scale(0.9); transition: 0.3s;
+        }
+        .modal-overlay.active .modal-box { transform: scale(1); }
+        .modal-header {
+            background: var(--eu-blue); color: white; padding: 18px 25px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Montserrat'; font-size: 16px; font-weight: 700;
+        }
+        .modal-close { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
+        .modal-body { flex-grow: 1; display: flex; flex-direction: column; background: #eee; position: relative; }
+        .modal-body iframe { width: 100%; height: 100%; border: none; }
+
         /* HABERLER VE ETKİNLİKLER YAN YANA */
         .content-grid-section {
             padding: 20px 5% 40px 5%;
@@ -191,101 +214,55 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             border-top: 4px solid var(--eu-blue);
         }
-        .section-card.events-border {
-            border-top-color: var(--eu-gold);
-        }
+        .section-card.events-border { border-top-color: var(--eu-gold); }
 
         .card-header-flex {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
         }
         .view-all-link {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--eu-blue);
-            text-decoration: none;
-            cursor: pointer;
+            font-size: 13px; font-weight: 700; color: var(--eu-blue); text-decoration: none; cursor: pointer;
         }
         .view-all-link:hover { text-decoration: underline; }
 
         .carousel-container {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            height: 280px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            cursor: pointer;
+            position: relative; border-radius: 12px; overflow: hidden; height: 280px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer;
         }
         .carousel-slide {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 25px;
-            color: white;
-            transition: opacity 0.5s ease-in-out;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 25px; color: white; transition: opacity 0.5s ease-in-out;
         }
         .carousel-slide::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 70%);
-            z-index: 1;
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 70%); z-index: 1;
         }
         .slide-content { position: relative; z-index: 2; }
         .slide-date {
-            font-size: 12px;
-            background: var(--eu-gold);
-            color: var(--eu-blue);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: 700;
-            display: inline-block;
-            margin-bottom: 8px;
+            font-size: 12px; background: var(--eu-gold); color: var(--eu-blue);
+            padding: 4px 10px; border-radius: 4px; font-weight: 700; display: inline-block; margin-bottom: 8px;
         }
         .slide-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.4;
-            color: white;
+            font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 700; line-height: 1.4; color: white;
         }
 
         /* GÜMRÜK ASİSTANI MODAL */
         .ai-workspace-modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: var(--bg-gray);
-            z-index: 9999;
-            display: flex;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-gray); z-index: 9999; display: flex;
+            transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .ai-workspace-modal.active { transform: translateY(0); }
 
         .ai-sidebar {
-            width: 320px;
-            background: var(--white);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
+            width: 320px; background: var(--white); border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; flex-shrink: 0;
         }
         .ai-sidebar-header {
-            padding: 20px;
-            background: var(--eu-blue);
-            color: var(--white);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            padding: 20px; background: var(--eu-blue); color: var(--white);
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Montserrat', sans-serif; font-weight: 700;
         }
         .ai-sidebar-header i { color: var(--eu-gold); }
         .ai-threads { flex-grow: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 8px; }
@@ -314,13 +291,8 @@
 
         /* FOOTER */
         .eu-footer {
-            background: var(--eu-blue);
-            color: var(--white);
-            padding: 40px 5%;
-            margin-top: 40px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
+            background: var(--eu-blue); color: var(--white); padding: 40px 5%;
+            margin-top: 40px; display: flex; align-items: center; gap: 30px;
         }
         .eu-footer p { font-size: 12px; opacity: 0.9; margin: 0; }
         .eu-footer h4 { font-family: 'Montserrat', sans-serif; font-size: 16px; margin-bottom: 5px; color: var(--eu-gold); }
@@ -328,7 +300,7 @@
         /* MOBİL UYUM */
         @media (max-width: 1024px) {
             .content-grid-section { grid-template-columns: 1fr; }
-            .map-wrapper { height: 400px; }
+            .map-wrapper { height: 450px; }
         }
         @media (max-width: 768px) {
             .desktop-nav { display: none; }
@@ -360,24 +332,35 @@
         <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- 1. BÖLÜM: KARADENİZ HAVZASI ODAKLI HARİTA -->
+    <!-- 1. BÖLÜM: GENİŞLETİLMİŞ KARADENİZ HAVZASI HARİTASI VE LİMANLAR -->
     <section class="hero-map-section">
         <div class="map-card">
             <div class="card-header">
-                <span><i class="fas fa-globe-europe"></i> Bölgesel Lojistik Ağı (TR, BG, GE)</span>
-                <span style="font-size: 12px; color: var(--text-muted);"><i class="fas fa-circle" style="color: #10b981;"></i> Canlı Veri</span>
+                <span><i class="fas fa-globe-europe"></i> Karadeniz Havzası Stratejik Deniz Limanları & Canlı Radar</span>
+                <span style="font-size: 12px; color: var(--text-muted);"><i class="fas fa-circle" style="color: #10b981;"></i> Canlı Bağlantı</span>
             </div>
             
             <div class="map-wrapper">
                 <div class="map-filters">
-                    <button class="filter-btn active"><i class="fas fa-ship"></i> Denizyolu</button>
-                    <button class="filter-btn active"><i class="fas fa-truck"></i> Karayolu</button>
-                    <button class="filter-btn"><i class="fas fa-train"></i> Demiryolu</button>
+                    <button class="filter-btn active"><i class="fas fa-anchor"></i> Tüm Limanlar</button>
                 </div>
                 <div id="map"></div>
             </div>
         </div>
     </section>
+
+    <!-- LİMAN DETAY (MARINETRAFFIC) MODALI -->
+    <div class="modal-overlay" id="portModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span id="modalPortTitle"><i class="fas fa-ship"></i> Liman Gemi Trafiği</span>
+                <button class="modal-close" onclick="closePortModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalPortBody">
+                <!-- MarineTraffic Iframe dinamik yüklenecek -->
+            </div>
+        </div>
+    </div>
 
     <!-- 2. BÖLÜM: HABERLER VE ETKİNLİKLER YAN YANA -->
     <section class="content-grid-section">
@@ -448,7 +431,7 @@
 
     <!-- AB GÖRÜNÜRLÜK FOOTER -->
     <footer class="eu-footer">
-        <i class="fas fa-flag-eu" style="font-size: 64px;">34</i>
+        <i class="fas fa-flag-eu" style="font-size: 64px;"></i>
         <div>
             <h4>Black Sea Basin Sustainable Logistics and Cooperation Network (BSB-LOGINET)</h4>
             <p>Bu platform, Avrupa Birliği'nin finansal desteğiyle Interreg NEXT Karadeniz Havzası Programı kapsamında yürütülmektedir. Proje lideri Samsun Ticaret ve Sanayi Odası (Türkiye), ortakları Varna TSO (Bulgaristan) ve Acara TSO'dur (Gürcistan). İçeriklerin sorumluluğu ortaklara aittir ve AB'nin görüşlerini yansıtmayabilir.</p>
@@ -458,8 +441,8 @@
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
-        // Karadeniz Havzası Koordinat Sınırları (Türkiye, Bulgaristan, Romanya, Gürcistan ekseni)
-        const blackSeaExtent = ol.proj.transformExtent([26.0, 40.0, 43.0, 46.5], 'EPSG:4326', 'EPSG:3857');
+        // Karadeniz Havzası Odaklı Genişletilmiş Sınırlar
+        const blackSeaExtent = ol.proj.transformExtent([25.0, 39.0, 45.0, 48.0], 'EPSG:4326', 'EPSG:3857');
 
         const map = new ol.Map({
             target: 'map',
@@ -469,23 +452,88 @@
                 })
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([34.5, 43.2]), // Karadeniz'in ortası / Samsun hizası
-                zoom: 6.2,
+                center: ol.proj.fromLonLat([34.0, 42.5]),
+                zoom: 6.0,
                 minZoom: 5,
                 maxZoom: 10,
-                extent: blackSeaExtent // Haritanın Karadeniz havzası dışına çıkmasını engeller
+                extent: blackSeaExtent
             })
         });
 
-        // Sayfa scroll yaparken haritanın zoom tuzağına düşmesini önleyen etkileşim ayarı
-        // Kullanıcı haritaya tıkladığında veya dokunduğunda zoom aktif olur, scroll akışı bozulmaz.
-        map.getInteractions().forEach(function(interaction) {
-            if (interaction instanceof ol.interaction.MouseWheelZoom) {
-                // Sadece harita üzerine tıklandığında veya aktif çalışıldığında zoom yapmasına izin verilebilir 
-                // ya da standart bırakılarak sayfa akışı sağlanır.
+        // Liman Verileri (Koordinatlar, İsimler ve Merkez Enlem/Boylamlar)
+        const portsData = [
+            { name: "Samsun Limanı (TR)", lon: 36.33, lat: 41.28 },
+            { name: "Varna Limanı (BG)", lon: 27.91, lat: 43.21 },
+            { name: "Batum Limanı (GE)", lon: 41.63, lat: 41.61 },
+            { name: "Poti Limanı (GE)", lon: 41.67, lat: 42.15 },
+            { name: "Köstence Limanı (RO)", lon: 28.65, lat: 44.15 },
+            { name: "Burgaz Limanı (BG)", lon: 27.46, lat: 42.50 },
+            { name: "Trabzon Limanı (TR)", lon: 39.72, lat: 41.00 },
+            { name: "Novorossiysk Limanı (RU)", lon: 37.78, lat: 44.72 },
+            { name: "Odessa Limanı (UA)", lon: 30.73, lat: 46.48 }
+        ];
+
+        const vectorSource = new ol.source.Vector();
+        const vectorLayer = new ol.layer.Vector({ source: vectorSource, zIndex: 10 });
+        map.addLayer(vectorLayer);
+
+        // Mavi Top ve Beyaz Çapa İkon Stili (HTML/CSS tabanlı şık marker)
+        portsData.forEach(port => {
+            const feature = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([port.lon, port.lat])),
+                portName: port.name,
+                lat: port.lat,
+                lon: port.lon
+            });
+
+            feature.setStyle(new ol.style.Style({
+                image: new ol.style.Circle({
+                    radius: 12,
+                    fill: new ol.style.Fill({ color: '#003399' }), // AB Mavisi Top
+                    stroke: new ol.style.Stroke({ color: '#FFCC00', width: 2 }) // AB Sarısı Çerçeve
+                }),
+                text: new ol.style.Text({
+                    text: '\uf2cd', // FontAwesome Çapa (Anchor) Kodu
+                    font: '900 12px "Font Awesome 6 Free"',
+                    fill: new ol.style.Fill({ color: '#FFFFFF' }), // Beyaz Çapa
+                    textAlign: 'center',
+                    textBaseline: 'middle'
+                })
+            }));
+
+            vectorSource.addFeature(feature);
+        });
+
+        // Liman Tıklama Olayı (MarineTraffic Iframe Yükleme)
+        map.on('singleclick', function(evt) {
+            let clickedFeature = null;
+            map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                clickedFeature = feature;
+                return true;
+            });
+
+            if (clickedFeature) {
+                const name = clickedFeature.get('portName');
+                const lat = clickedFeature.get('lat');
+                const lon = clickedFeature.get('lon');
+
+                document.getElementById('modalPortTitle').innerHTML = `<i class="fas fa-ship" style="color:var(--eu-gold);"></i> ${name} - Canlı Gemi Trafiği`;
+                
+                // Ücretsiz ve Akıllı MarineTraffic Iframe Entegrasyonu
+                document.getElementById('modalPortBody').innerHTML = `
+                    <iframe src="https://www.marinetraffic.com/en/ais/embed/zoom:12/centery:${lat}/centerx:${lon}/maptype:1/shownames:true/mmsi:0/shipid:0/fleet:/fleet_id:/vtypes:/showmenu:false/remember:false"></iframe>
+                `;
+
+                document.getElementById('portModal').classList.add('active');
             }
         });
 
+        function closePortModal() {
+            document.getElementById('portModal').classList.remove('active');
+            document.getElementById('modalPortBody').innerHTML = '';
+        }
+
+        // Gümrük Asistanı Modal Kontrolleri
         function openAiWorkspace() {
             document.getElementById('aiWorkspaceModal').classList.add('active');
         }
