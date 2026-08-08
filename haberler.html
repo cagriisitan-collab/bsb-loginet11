@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Haberler | BSB-LOGINET Interreg NEXT Karadeniz Havzası</title>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --eu-blue: #003399;
+            --eu-gold: #FFCC00;
+            --eu-light-blue: #E6F0FA;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --bg-gray: #F4F7F9;
+            --white: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--white);
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            box-shadow: 0 4px 15px rgba(0, 51, 153, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .eu-flag {
+            font-size: 32px;
+            color: var(--eu-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 2px solid var(--border-color);
+            padding-right: 20px;
+        }
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--eu-blue);
+            line-height: 1.1;
+        }
+        .logo-text span {
+            color: var(--eu-gold);
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .desktop-nav { display: flex; gap: 10px; align-items: center; }
+        .desktop-nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 13px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .desktop-nav a:hover, .desktop-nav a.active {
+            background: var(--eu-light-blue);
+            color: var(--eu-blue);
+        }
+        .btn-ai {
+            background: var(--eu-blue) !important;
+            color: var(--white) !important;
+        }
+        .btn-ai i { color: var(--eu-gold); }
+        .btn-b2b {
+            background: var(--eu-gold) !important;
+            color: var(--eu-blue) !important;
+            font-weight: 700 !important;
+        }
+
+        /* HERO BANNER (Görseldeki Stil) */
+        .page-hero {
+            background: linear-gradient(rgba(0, 51, 153, 0.85), rgba(0, 51, 153, 0.85)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .breadcrumb {
+            font-size: 13px;
+            color: var(--eu-light-blue);
+            font-weight: 600;
+        }
+        .breadcrumb a { color: white; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ARAMA VE FİLTRELEME ALANI */
+        .filter-container {
+            max-width: 1200px;
+            margin: -40px auto 30px auto;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: var(--bg-gray);
+        }
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        .filter-select {
+            padding: 14px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--bg-gray);
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+        .gallery-btn {
+            background: var(--eu-blue);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .gallery-btn:hover { background: #002266; }
+
+        /* HABERLER GRID LISTESI */
+        .news-grid-section {
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+        .results-count {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 25px;
+        }
+        .news-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: var(--eu-blue);
+        }
+        .news-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            background: #cbd5e1;
+        }
+        .news-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+        .news-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        .news-card:hover .news-title { color: var(--eu-blue); }
+        .news-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* FOOTER */
+        .eu-footer {
+            background: var(--eu-blue); color: var(--white); padding: 40px 5%;
+            margin-top: 40px; display: flex; align-items: center; gap: 30px;
+        }
+        .eu-footer p { font-size: 12px; opacity: 0.9; margin: 0; }
+        .eu-footer h4 { font-family: 'Montserrat', sans-serif; font-size: 16px; margin-bottom: 5px; color: var(--eu-gold); }
+
+        /* MOBİL UYUM */
+        @media (max-width: 768px) {
+            .filter-container { flex-direction: column; margin: -20px 15px 20px 15px; padding: 15px; }
+            .search-box, .filter-select, .gallery-btn { width: 100%; }
+            .desktop-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- KURUMSAL BAŞLIK -->
+    <header class="header">
+        <div class="logo-group">
+            <div class="eu-flag"><i class="fas fa-flag-eu"></i></div>
+            <div class="logo-text">BSB-LOGINET<br><span>Interreg NEXT Black Sea Basin</span></div>
+        </div>
+        
+        <nav class="desktop-nav">
+            <a href="index.html"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="haberler.html" class="active"><i class="fas fa-newspaper"></i> Haberler</a>
+            <a href="bsb-connect.html" class="btn-b2b"><i class="fas fa-handshake"></i> B2B</a>
+            <a href="#"><i class="fas fa-route"></i> CO2 Rota Aracı</a>
+            <a href="#"><i class="fas fa-book"></i> Bilgi Bankası</a>
+        </nav>
+    </header>
+
+    <!-- HERO ALANI -->
+    <section class="page-hero">
+        <h1>HABERLER</h1>
+        <div class="breadcrumb"><a href="index.html">ANASAYFA</a> › HABERLER</div>
+    </section>
+
+    <!-- FİLTRELEME VE ARAMA -->
+    <div class="filter-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Haberlerde ara..." id="newsSearch" onkeyup="filterNews()">
+        </div>
+        <select class="filter-select" id="dateFilter" onchange="filterNews()">
+            <option value="">Tüm Tarihler</option>
+            <option value="2026-06">Haziran 2026</option>
+            <option value="2026-05">Mayıs 2026</option>
+        </select>
+        <button class="gallery-btn"><i class="fas fa-images"></i> Fotoğraf Galerileri</button>
+    </div>
+
+    <!-- HABERLER LİSTESİ (GRID) -->
+    <section class="news-grid-section">
+        <div class="results-count" id="resultCount">4 sonuç bulundu</div>
+        
+        <div class="news-grid" id="newsGrid">
+            
+            <div class="news-card" onclick="location.href='haber-detay.html?id=1'">
+                <img src="https://images.unsplash.com/photo-1494412519320-aa3da6e05a8d?auto=format&fit=crop&q=80&w=600" class="news-img" alt="Haber">
+                <div class="news-body">
+                    <div class="news-title">Lojistik İhtiyaç Analizi Odak Grup Toplantısı Samsun'da Gerçekleşti</div>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 12 Haziran 2026</div>
+                </div>
+            </div>
+
+            <div class="news-card" onclick="location.href='haber-detay.html?id=2'">
+                <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=600" class="news-img" alt="Haber">
+                <div class="news-body">
+                    <div class="news-title">Karadeniz Havzasında Yeni Ro-Ro Hattı ve Deniz Taşımacılığı İstişareleri</div>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 05 Haziran 2026</div>
+                </div>
+            </div>
+
+            <div class="news-card" onclick="location.href='haber-detay.html?id=3'">
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=600" class="news-img" alt="Haber">
+                <div class="news-body">
+                    <div class="news-title">Varna ve Batum Ortaklığıyla Dijital Lojistik Altyapı Çalışmaları Başladı</div>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 28 Mayıs 2026</div>
+                </div>
+            </div>
+
+            <div class="news-card" onclick="location.href='haber-detay.html?id=4'">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=600" class="news-img" alt="Haber">
+                <div class="news-body">
+                    <div class="news-title">Interreg NEXT Karadeniz Havzası Proje Koordinasyon Toplantısı Düzenlendi</div>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 15 Mayıs 2026</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- AB GÖRÜNÜRLÜK FOOTER -->
+    <footer class="eu-footer">
+        <i class="fas fa-flag-eu" style="font-size: 64px;"></i>
+        <div>
+            <h4>Black Sea Basin Sustainable Logistics and Cooperation Network (BSB-LOGINET)</h4>
+            <p>Bu platform, Avrupa Birliği'nin finansal desteğiyle Interreg NEXT Karadeniz Havzası Programı kapsamında yürütülmektedir. Proje lideri Samsun Ticaret ve Sanayi Odası (Türkiye), ortakları Varna TSO (Bulgaristan) ve Acara TSO'dur (Gürcistan).</p>
+        </div>
+    </footer>
+
+    <script>
+        // Arama Filtreleme Simülasyonu
+        function filterNews() {
+            let input = document.getElementById('newsSearch').value.toLowerCase();
+            let cards = document.getElementsByClassName('news-card');
+            let count = 0;
+
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getElementsByClassName('news-title')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "flex";
+                    count++;
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+            document.getElementById('resultCount').innerText = count + " sonuç bulundu";
+        }
+    </script>
+</body>
+</html>
