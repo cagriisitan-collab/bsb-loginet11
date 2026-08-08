@@ -113,7 +113,7 @@
             cursor: pointer;
         }
 
-        /* GENİŞLETİLMİŞ HARİTA ALANI */
+        /* HARİTA ALANI */
         .hero-map-section {
             padding: 20px 5% 0 5%;
             max-width: 1600px;
@@ -166,12 +166,9 @@
             color: var(--eu-blue);
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
-        .filter-btn.active {
-            background: var(--eu-blue);
-            color: var(--white);
-            border-color: var(--eu-blue);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         /* LİMAN DETAY MODALI (MARINETRAFFIC) */
@@ -332,17 +329,17 @@
         <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- 1. BÖLÜM: KARADENİZ HAVZASI ODAKLI HARİTA VE TÜM LİMANLAR -->
+    <!-- 1. BÖLÜM: MARMARA - KARADENİZ KAPSAMLI HARİTA VE LİMANLAR -->
     <section class="hero-map-section">
         <div class="map-card">
             <div class="card-header">
-                <span><i class="fas fa-globe-europe"></i> Karadeniz Havzası Tüm Stratejik Deniz Limanları & Canlı Radar</span>
+                <span><i class="fas fa-globe-europe"></i> Marmara & Karadeniz Havzası Limanları ve Canlı Radar</span>
                 <span style="font-size: 12px; color: var(--text-muted);"><i class="fas fa-circle" style="color: #10b981;"></i> Canlı Bağlantı</span>
             </div>
             
             <div class="map-wrapper">
                 <div class="map-filters">
-                    <button class="filter-btn active"><i class="fas fa-anchor"></i> Tüm Limanlar (TR, BG, RO, UA, RU, GE)</button>
+                    <button class="filter-btn active"><i class="fas fa-anchor"></i> Limanlar</button>
                 </div>
                 <div id="map"></div>
             </div>
@@ -439,8 +436,8 @@
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
-        // Karadeniz Havzası Sınırları (Odessa ve Azak Denizi dahil üst havzayı tam kapsayacak şekilde yukarı kaydırıldı)
-        const blackSeaExtent = ol.proj.transformExtent([25.0, 40.0, 45.0, 49.0], 'EPSG:4326', 'EPSG:3857');
+        // Marmara ve Karadeniz Havzasını tam kapsayan coğrafi sınırlar
+        const marmaraBlackSeaExtent = ol.proj.transformExtent([25.0, 39.5, 43.5, 48.5], 'EPSG:4326', 'EPSG:3857');
 
         const map = new ol.Map({
             target: 'map',
@@ -451,11 +448,11 @@
             ],
             interactions: ol.interaction.defaults.defaults({mouseWheelZoom: false}),
             view: new ol.View({
-                center: ol.proj.fromLonLat([34.0, 43.8]), // Merkez yukarı (Odessa/Kırım hattını kapsayacak şekilde) kaydırıldı
-                zoom: 6.0,
+                center: ol.proj.fromLonLat([31.5, 42.0]), // İstanbul / Marmara - Karadeniz merkezli görünüm
+                zoom: 6.2,
                 minZoom: 5.5,
                 maxZoom: 10,
-                extent: blackSeaExtent
+                extent: marmaraBlackSeaExtent
             })
         });
 
@@ -468,43 +465,44 @@
             });
         });
 
-        // Karadeniz Havzasındaki TÜM Stratejik Limanlar (Türkiye, Bulgaristan, Romanya, Ukrayna, Rusya, Gürcistan)
+        // Tüm Stratejik Limanlar (İstanbul, Tekirdağ, Zonguldak, Sinop vb. dahil)
         const portsData = [
-            // Türkiye Kıyıları
-            { name: "Samsun Limanı (TR)", lon: 36.33, lat: 41.28 },
-            { name: "Trabzon Limanı (TR)", lon: 39.72, lat: 41.00 },
-            { name: "Zonguldak Limanı (TR)", lon: 31.79, lat: 41.45 },
-            { name: "Sinop Limanı (TR)", lon: 35.15, lat: 42.02 },
-            { name: "Ordu Limanı (TR)", lon: 37.88, lat: 40.98 },
-            { name: "Giresun Limanı (TR)", lon: 38.38, lat: 40.92 },
-            { name: "Rize Limanı (TR)", lon: 40.51, lat: 41.03 },
-            { name: "Hopa Limanı (TR)", lon: 41.42, lat: 41.39 },
-            { name: "Bartın / İnebolu Limanı (TR)", lon: 33.75, lat: 41.97 },
-            { name: "Ereğli Limanı (TR)", lon: 31.41, lat: 41.28 },
-            
-            // Bulgaristan Kıyıları
-            { name: "Varna Limanı (BG)", lon: 27.91, lat: 43.21 },
-            { name: "Burgaz Limanı (BG)", lon: 27.46, lat: 42.50 },
-            
-            // Romanya Kıyıları
-            { name: "Köstence (Constanta) Limanı (RO)", lon: 28.65, lat: 44.15 },
-            { name: "Midia Limanı (RO)", lon: 28.65, lat: 44.30 },
-            
-            // Ukrayna Kıyıları
-            { name: "Odessa Limanı (UA)", lon: 30.73, lat: 46.48 },
-            { name: "Chornomorsk Limanı (UA)", lon: 30.65, lat: 46.30 },
-            { name: "Pivdenny (Yuzhne) Limanı (UA)", lon: 31.00, lat: 46.62 },
-            { name: "Mariupol Limanı (UA)", lon: 37.55, lat: 47.05 },
-            
-            // Rusya Kıyıları
-            { name: "Novorossiysk Limanı (RU)", lon: 37.78, lat: 44.72 },
-            { name: "Soçi Limanı (RU)", lon: 39.72, lat: 43.58 },
-            { name: "Tuapse Limanı (RU)", lon: 39.07, lat: 44.10 },
-            
-            // Gürcistan Kıyıları
-            { name: "Batum Limanı (GE)", lon: 41.63, lat: 41.61 },
-            { name: "Poti Limanı (GE)", lon: 41.67, lat: 42.15 },
-            { name: "Kulevi Terminali (GE)", lon: 41.68, lat: 42.30 }
+            // --- PROJE ORTAKLARI (Özel Bayrak Renkleri) ---
+            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#E30A17", strokeColor: "#FFFFFF" }, // Kırmızı-Beyaz (Türk Bayrağı)
+            { name: "Varna Limanı (BG - Ortak)", lon: 27.91, lat: 43.21, type: "partner", fillColor: "#00966E", strokeColor: "#D62612" }, // Beyaz-Yeşil-Kırmızı (Bulgar Bayrağından ilham)
+            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FF0000", strokeColor: "#FFFFFF" }, // Kırmızı-Beyaz (Gürcü Bayrağı)
+
+            // --- TÜRKİYE (Marmara & Karadeniz Kıyıları) ---
+            { name: "Ambarlı Limanı / İstanbul", lon: 28.70, lat: 40.97, type: "std" },
+            { name: "Haydarpaşa Limanı / İstanbul", lon: 29.02, lat: 40.99, type: "std" },
+            { name: "Tekirdağ / Asyaport Limanı", lon: 27.45, lat: 40.98, type: "std" },
+            { name: "Kocaeli / İzmit Limanları", lon: 29.88, lat: 40.76, type: "std" },
+            { name: "Zonguldak Limanı", lon: 31.79, lat: 41.45, type: "std" },
+            { name: "Karadeniz Ereğli Limanı", lon: 31.41, lat: 41.28, type: "std" },
+            { name: "Sinop Limanı", lon: 35.15, lat: 42.02, type: "std" },
+            { name: "Bartın / İnebolu Limanı", lon: 33.75, lat: 41.97, type: "std" },
+            { name: "Ordu Limanı", lon: 37.88, lat: 40.98, type: "std" },
+            { name: "Giresun Limanı", lon: 38.38, lat: 40.92, type: "std" },
+            { name: "Rize Limanı", lon: 40.51, lat: 41.03, type: "std" },
+            { name: "Hopa Limanı", lon: 41.42, lat: 41.39, type: "std" },
+            { name: "Trabzon Limanı", lon: 39.72, lat: 41.00, type: "std" },
+
+            // --- BULGARİSTAN & ROMANYA ---
+            { name: "Burgaz Limanı (BG)", lon: 27.46, lat: 42.50, type: "std" },
+            { name: "Köstence (Constanta) Limanı (RO)", lon: 28.65, lat: 44.15, type: "std" },
+            { name: "Midia Limanı (RO)", lon: 28.65, lat: 44.30, type: "std" },
+
+            // --- UKRAYNA & RUSYA ---
+            { name: "Odessa Limanı (UA)", lon: 30.73, lat: 46.48, type: "std" },
+            { name: "Chornomorsk Limanı (UA)", lon: 30.65, lat: 46.30, type: "std" },
+            { name: "Pivdenny (Yuzhne) Limanı (UA)", lon: 31.00, lat: 46.62, type: "std" },
+            { name: "Novorossiysk Limanı (RU)", lon: 37.78, lat: 44.72, type: "std" },
+            { name: "Soçi Limanı (RU)", lon: 39.72, lat: 43.58, type: "std" },
+            { name: "Tuapse Limanı (RU)", lon: 39.07, lat: 44.10, type: "std" },
+
+            // --- GÜRCİSTAN (Diğer) ---
+            { name: "Poti Limanı (GE)", lon: 41.67, lat: 42.15, type: "std" },
+            { name: "Kulevi Terminali (GE)", lon: 41.68, lat: 42.30, type: "std" }
         ];
 
         const vectorSource = new ol.source.Vector();
@@ -519,16 +517,21 @@
                 lon: port.lon
             });
 
+            // Ortak limanlar bayrak renklerinde, diğerleri AB Mavi-Sarısı tonlarında
+            let fillColor = port.type === "partner" ? port.fillColor : '#003399';
+            let strokeColor = port.type === "partner" ? port.strokeColor : '#FFCC00';
+            let radiusSize = port.type === "partner" ? 15 : 12; // Ortak limanlar daha belirgin büyük
+
             feature.setStyle(new ol.style.Style({
                 image: new ol.style.Circle({
-                    radius: 13,
-                    fill: new ol.style.Fill({ color: '#003399' }), // AB Mavisi Top
-                    stroke: new ol.style.Stroke({ color: '#FFCC00', width: 2 }) // AB Sarısı Çerçeve
+                    radius: radiusSize,
+                    fill: new ol.style.Fill({ color: fillColor }),
+                    stroke: new ol.style.Stroke({ color: strokeColor, width: 2.5 })
                 }),
                 text: new ol.style.Text({
-                    text: '\uf13d', // Net ve doğru çapa (Anchor) ikonu
-                    font: '900 13px "Font Awesome 6 Free"',
-                    fill: new ol.style.Fill({ color: '#FFFFFF' }), // Beyaz Çapa
+                    text: '\uf13d', // Net çapa (Anchor) ikonu
+                    font: '900 12px "Font Awesome 6 Free"',
+                    fill: new ol.style.Fill({ color: '#FFFFFF' }),
                     textAlign: 'center',
                     textBaseline: 'middle'
                 })
