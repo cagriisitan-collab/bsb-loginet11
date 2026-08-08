@@ -196,51 +196,51 @@
             border-top: 4px solid var(--eu-blue);
         }
 
+        .widget-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .view-all-link {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--eu-blue);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .view-all-link:hover { text-decoration: underline; }
+
         .news-list, .events-list {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 15px;
         }
 
-        .news-item, .event-item {
+        .news-card-item, .event-card-item {
             display: flex;
             gap: 12px;
-            align-items: flex-start;
+            align-items: center;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
             transition: 0.2s;
         }
-        .news-item:last-child, .event-item:last-child {
+        .news-card-item:last-child, .event-card-item:last-child {
             border-bottom: none;
             padding-bottom: 0;
         }
-        .news-item:hover h5, .event-item:hover h5 {
+        .news-card-item:hover h5, .event-card-item:hover h5 {
             color: var(--eu-blue);
         }
 
-        .news-date-badge {
-            background: var(--eu-light-blue);
-            color: var(--eu-blue);
-            padding: 6px 10px;
+        .item-thumb {
+            width: 70px;
+            height: 55px;
             border-radius: 8px;
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 11px;
+            object-fit: cover;
             flex-shrink: 0;
-        }
-        .event-date-badge {
-            background: #fef3c7;
-            color: #d97706;
-            padding: 6px 10px;
-            border-radius: 8px;
-            text-align: center;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 11px;
-            flex-shrink: 0;
+            background: #cbd5e1;
         }
 
         .item-content h5 {
@@ -248,15 +248,22 @@
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 4px;
-            line-height: 1.4;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .item-content p {
-            font-size: 12px;
+        .item-date {
+            font-size: 11px;
             color: var(--text-muted);
-            margin: 0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        /* ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI (FULL SCREEN WORKSPACE) */
+        /* ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI */
         .ai-workspace-modal {
             position: fixed;
             top: 0;
@@ -462,32 +469,32 @@
                     <button class="filter-btn active"><i class="fas fa-truck"></i> Karayolu</button>
                     <button class="filter-btn"><i class="fas fa-train"></i> Demiryolu</button>
                 </div>
-                <!-- OpenLayers Harita Konteyneri -->
                 <div id="map"></div>
             </div>
         </div>
 
-        <!-- SAĞ SÜTUN: HABERLER VE YAKLAŞAN ETKİNLİKLER -->
+        <!-- SAĞ SÜTUN: HABERLER VE YAKLAŞAN ETKİNLİKLER (FOTOĞRAF DESTEKLİ) -->
         <div class="widgets-column">
             
             <!-- HABERLER WIDGET -->
             <div class="widget-card">
-                <div class="card-header">
-                    <span><i class="fas fa-newspaper" style="color: var(--eu-blue);"></i> Güncel Haberler</span>
+                <div class="widget-header-flex">
+                    <div class="card-header" style="margin:0;"><i class="fas fa-newspaper" style="color: var(--eu-blue);"></i> Güncel Haberler</div>
+                    <a href="haberler.html" class="view-all-link">Tüm Haberler <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="news-list">
-                    <div class="news-item">
-                        <div class="news-date-badge">12 Haz</div>
+                    <div class="news-card-item" onclick="location.href='haber-detay.html?id=1'">
+                        <img src="https://images.unsplash.com/photo-1494412519320-aa3da6e05a8d?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Haber Görseli">
                         <div class="item-content">
                             <h5>Lojistik İhtiyaç Analizi Odak Grup Toplantısı Gerçekleşti</h5>
-                            <p>Samsun TSO liderliğinde Varna ve Acara ortaklarıyla bölgesel darboğazlar masaya yatırıldı.</p>
+                            <span class="item-date"><i class="far fa-calendar-alt"></i> 12 Haziran 2026</span>
                         </div>
                     </div>
-                    <div class="news-item">
-                        <div class="news-date-badge">05 Haz</div>
+                    <div class="news-card-item" onclick="location.href='haber-detay.html?id=2'">
+                        <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Haber Görseli">
                         <div class="item-content">
-                            <h5>Karadeniz Havzasında Yeni Ro-Ro Hattı</h5>
-                            <p>Samsun ile Poti Limanları arasında haftalık düzenli seferler için ön mutabakat sağlandı.</p>
+                            <h5>Karadeniz Havzasında Yeni Ro-Ro Hattı Müjdesi</h5>
+                            <span class="item-date"><i class="far fa-calendar-alt"></i> 05 Haziran 2026</span>
                         </div>
                     </div>
                 </div>
@@ -495,22 +502,23 @@
 
             <!-- YAKLAŞAN ETKİNLİKLER WIDGET -->
             <div class="widget-card" style="border-top-color: var(--eu-gold);">
-                <div class="card-header">
-                    <span><i class="fas fa-calendar-alt" style="color: #d97706;"></i> Yaklaşan Etkinlikler</span>
+                <div class="widget-header-flex">
+                    <div class="card-header" style="margin:0;"><i class="fas fa-calendar-alt" style="color: #d97706;"></i> Yaklaşan Etkinlikler</div>
+                    <a href="etkinlikler.html" class="view-all-link">Tüm Etkinlikler <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div class="events-list">
-                    <div class="event-item">
-                        <div class="event-date-badge">28 Tem</div>
+                    <div class="event-card-item" onclick="location.href='etkinlik-detay.html?id=1'">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Etkinlik Görseli">
                         <div class="item-content">
                             <h5>Dijital Beceriler ve Yeşil Lojistik Atölyesi</h5>
-                            <p>Varna Oda ev sahipliğinde çevrim içi hibrit oturum ve sektörel değerlendirme.</p>
+                            <span class="item-date"><i class="far fa-clock"></i> 28 Temmuz 2026</span>
                         </div>
                     </div>
-                    <div class="event-item">
-                        <div class="event-date-badge">15 Ağu</div>
+                    <div class="event-card-item" onclick="location.href='etkinlik-detay.html?id=2'">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Etkinlik Görseli">
                         <div class="item-content">
                             <h5>Genç Lojistikçiler Hackathonu Başlangıcı</h5>
-                            <p>Samsun'da düzenlenecek 3 günlük yenilikçi yazılım ve veri yarışması maratonu.</p>
+                            <span class="item-date"><i class="far fa-clock"></i> 15 Ağustos 2026</span>
                         </div>
                     </div>
                 </div>
@@ -519,7 +527,7 @@
         </div>
     </div>
 
-    <!-- ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI (FULL SCREEN WORKSPACE) -->
+    <!-- ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI -->
     <div class="ai-workspace-modal" id="aiWorkspaceModal">
         <div class="ai-sidebar">
             <div class="ai-sidebar-header">
@@ -559,7 +567,6 @@
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
-        // Harita Temel Ayarları
         const map = new ol.Map({
             target: 'map',
             layers: [
@@ -573,7 +580,6 @@
             })
         });
 
-        // Gümrük Asistanı Ekranını Aç / Kapat
         function openAiWorkspace() {
             document.getElementById('aiWorkspaceModal').classList.add('active');
         }
@@ -581,7 +587,6 @@
             document.getElementById('aiWorkspaceModal').classList.remove('active');
         }
 
-        // Yapay Zeka Mesajlaşma Simülasyonu
         function sendAiMessage() {
             const input = document.getElementById('aiUserInput');
             const box = document.getElementById('aiMessagesBox');
