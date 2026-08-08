@@ -113,17 +113,12 @@
             cursor: pointer;
         }
 
-        /* MAIN DASHBOARD GRID */
-        .dashboard-container {
-            padding: 30px 5%;
+        /* YENİ PLAN: TAM EKRAN HARİTA ALANI */
+        .hero-map-section {
+            padding: 20px 5% 0 5%;
             max-width: 1600px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 30px;
         }
-
-        /* MAP SECTION */
         .map-card {
             background: var(--white);
             border-radius: 16px;
@@ -146,7 +141,7 @@
         .map-wrapper {
             position: relative;
             width: 100%;
-            height: 570px;
+            height: 520px;
             border-radius: 12px;
             overflow: hidden;
             background: #aadaff;
@@ -179,31 +174,35 @@
             border-color: var(--eu-blue);
         }
 
-        /* WIDGETS COLUMN */
-        .widgets-column {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-        
-        .widget-card {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            position: relative;
-            overflow: hidden;
-            border-top: 4px solid var(--eu-blue);
+        /* ALT KISIM: HABERLER VE ETKİNLİKLER YAN YANA (KARUSEL KARTLAR) */
+        .content-grid-section {
+            padding: 20px 5% 40px 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
         }
 
-        .widget-header-flex {
+        .section-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--eu-blue);
+        }
+        .section-card.events-border {
+            border-top-color: var(--eu-gold);
+        }
+
+        .card-header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         .view-all-link {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--eu-blue);
             text-decoration: none;
@@ -211,65 +210,61 @@
         }
         .view-all-link:hover { text-decoration: underline; }
 
-        .news-list, .events-list {
+        /* BÜYÜK GÖRSELLİ KARUSEL / KART YAPI */
+        .carousel-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 280px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+        }
+        .carousel-slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            justify-content: flex-end;
+            padding: 25px;
+            color: white;
+            transition: opacity 0.5s ease-in-out;
         }
-
-        .news-card-item, .event-card-item {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: 0.2s;
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 70%);
+            z-index: 1;
         }
-        .news-card-item:last-child, .event-card-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
+        .slide-content {
+            position: relative;
+            z-index: 2;
         }
-        .news-card-item:hover h5, .event-card-item:hover h5 {
+        .slide-date {
+            font-size: 12px;
+            background: var(--eu-gold);
             color: var(--eu-blue);
-        }
-
-        .item-thumb {
-            width: 70px;
-            height: 55px;
-            border-radius: 8px;
-            object-fit: cover;
-            flex-shrink: 0;
-            background: #cbd5e1;
-        }
-
-        .item-content h5 {
-            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 4px;
             font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            display: inline-block;
+            margin-bottom: 8px;
         }
-        .item-date {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .slide-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: white;
         }
 
         /* ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI */
         .ai-workspace-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             background: var(--bg-gray);
             z-index: 9999;
             display: flex;
@@ -341,10 +336,8 @@
             color: var(--eu-blue);
         }
         .ai-close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--text-muted);
+            background: none; border: none;
+            font-size: 24px; color: var(--text-muted);
             cursor: pointer;
         }
         .ai-messages-area {
@@ -420,7 +413,7 @@
 
         /* MOBİL UYUM */
         @media (max-width: 1024px) {
-            .dashboard-container { grid-template-columns: 1fr; }
+            .content-grid-section { grid-template-columns: 1fr; }
             .map-wrapper { height: 400px; }
         }
         @media (max-width: 768px) {
@@ -453,10 +446,8 @@
         <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- ANA İÇERİK GRID -->
-    <div class="dashboard-container">
-        
-        <!-- SOL SÜTUN: HARİTA -->
+    <!-- 1. BÖLÜM: TAM EKRAN GENİŞLİKTE HARİTA -->
+    <section class="hero-map-section">
         <div class="map-card">
             <div class="card-header">
                 <span><i class="fas fa-globe-europe"></i> Bölgesel Lojistik Ağı (TR, BG, GE)</span>
@@ -472,60 +463,46 @@
                 <div id="map"></div>
             </div>
         </div>
+    </section>
 
-        <!-- SAĞ SÜTUN: HABERLER VE YAKLAŞAN ETKİNLİKLER (FOTOĞRAF DESTEKLİ) -->
-        <div class="widgets-column">
+    <!-- 2. BÖLÜM: HABERLER VE ETKİNLİKLER YAN YANA (BÜYÜK GÖRSELLİ KARUSEL) -->
+    <section class="content-grid-section">
+        
+        <!-- HABERLER KARTI -->
+        <div class="section-card">
+            <div class="card-header-flex">
+                <div class="card-header" style="margin:0;"><i class="fas fa-newspaper" style="color: var(--eu-blue);"></i> Güncel Haberler</div>
+                <a href="haberler.html" class="view-all-link">Tüm Haberler <i class="fas fa-arrow-right"></i></a>
+            </div>
             
-            <!-- HABERLER WIDGET -->
-            <div class="widget-card">
-                <div class="widget-header-flex">
-                    <div class="card-header" style="margin:0;"><i class="fas fa-newspaper" style="color: var(--eu-blue);"></i> Güncel Haberler</div>
-                    <a href="haberler.html" class="view-all-link">Tüm Haberler <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="news-list">
-                    <div class="news-card-item" onclick="location.href='haber-detay.html?id=1'">
-                        <img src="https://images.unsplash.com/photo-1494412519320-aa3da6e05a8d?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Haber Görseli">
-                        <div class="item-content">
-                            <h5>Lojistik İhtiyaç Analizi Odak Grup Toplantısı Gerçekleşti</h5>
-                            <span class="item-date"><i class="far fa-calendar-alt"></i> 12 Haziran 2026</span>
-                        </div>
-                    </div>
-                    <div class="news-card-item" onclick="location.href='haber-detay.html?id=2'">
-                        <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Haber Görseli">
-                        <div class="item-content">
-                            <h5>Karadeniz Havzasında Yeni Ro-Ro Hattı Müjdesi</h5>
-                            <span class="item-date"><i class="far fa-calendar-alt"></i> 05 Haziran 2026</span>
-                        </div>
+            <div class="carousel-container" onclick="location.href='haber-detay.html?id=1'">
+                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1494412519320-aa3da6e05a8d?auto=format&fit=crop&q=80&w=800');">
+                    <div class="slide-content">
+                        <span class="slide-date">12 Haziran 2026</span>
+                        <div class="slide-title">Lojistik İhtiyaç Analizi Odak Grup Toplantısı Samsun'da Gerçekleşti</div>
                     </div>
                 </div>
             </div>
-
-            <!-- YAKLAŞAN ETKİNLİKLER WIDGET -->
-            <div class="widget-card" style="border-top-color: var(--eu-gold);">
-                <div class="widget-header-flex">
-                    <div class="card-header" style="margin:0;"><i class="fas fa-calendar-alt" style="color: #d97706;"></i> Yaklaşan Etkinlikler</div>
-                    <a href="etkinlikler.html" class="view-all-link">Tüm Etkinlikler <i class="fas fa-arrow-right"></i></a>
-                </div>
-                <div class="events-list">
-                    <div class="event-card-item" onclick="location.href='etkinlik-detay.html?id=1'">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Etkinlik Görseli">
-                        <div class="item-content">
-                            <h5>Dijital Beceriler ve Yeşil Lojistik Atölyesi</h5>
-                            <span class="item-date"><i class="far fa-clock"></i> 28 Temmuz 2026</span>
-                        </div>
-                    </div>
-                    <div class="event-card-item" onclick="location.href='etkinlik-detay.html?id=2'">
-                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=200" class="item-thumb" alt="Etkinlik Görseli">
-                        <div class="item-content">
-                            <h5>Genç Lojistikçiler Hackathonu Başlangıcı</h5>
-                            <span class="item-date"><i class="far fa-clock"></i> 15 Ağustos 2026</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
+
+        <!-- ETKİNLİKLER KARTI -->
+        <div class="section-card events-border">
+            <div class="card-header-flex">
+                <div class="card-header" style="margin:0;"><i class="fas fa-calendar-alt" style="color: #d97706;"></i> Yaklaşan Etkinlikler</div>
+                <a href="etkinlikler.html" class="view-all-link">Tüm Etkinlikler <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="carousel-container" onclick="location.href='etkinlik-detay.html?id=1'">
+                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800');">
+                    <div class="slide-content">
+                        <span class="slide-date" style="background: #fef3c7; color: #d97706;">28 Temmuz 2026</span>
+                        <div class="slide-title">Dijital Beceriler ve Yeşil Lojistik Çevrim İçi Atölye Çalışması</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
 
     <!-- ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI -->
     <div class="ai-workspace-modal" id="aiWorkspaceModal">
