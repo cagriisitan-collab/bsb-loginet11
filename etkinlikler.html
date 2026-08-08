@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Etkinlikler | BSB-LOGINET Interreg NEXT Karadeniz Havzası</title>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --eu-blue: #003399;
+            --eu-gold: #FFCC00;
+            --eu-light-blue: #E6F0FA;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --bg-gray: #F4F7F9;
+            --white: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--white);
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            box-shadow: 0 4px 15px rgba(0, 51, 153, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .eu-flag {
+            font-size: 32px;
+            color: var(--eu-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-right: 2px solid var(--border-color);
+            padding-right: 20px;
+        }
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--eu-blue);
+            line-height: 1.1;
+        }
+        .logo-text span {
+            color: var(--eu-gold);
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .desktop-nav { display: flex; gap: 10px; align-items: center; }
+        .desktop-nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 13px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .desktop-nav a:hover, .desktop-nav a.active {
+            background: var(--eu-light-blue);
+            color: var(--eu-blue);
+        }
+        .btn-ai {
+            background: var(--eu-blue) !important;
+            color: var(--white) !important;
+        }
+        .btn-ai i { color: var(--eu-gold); }
+        .btn-b2b {
+            background: var(--eu-gold) !important;
+            color: var(--eu-blue) !important;
+            font-weight: 700 !important;
+        }
+
+        /* HERO BANNER */
+        .page-hero {
+            background: linear-gradient(rgba(0, 51, 153, 0.85), rgba(0, 51, 153, 0.85)), url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .breadcrumb {
+            font-size: 13px;
+            color: var(--eu-light-blue);
+            font-weight: 600;
+        }
+        .breadcrumb a { color: white; text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* ARAMA VE FİLTRELEME ALANI */
+        .filter-container {
+            max-width: 1200px;
+            margin: -40px auto 30px auto;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .search-box {
+            flex-grow: 1;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: var(--bg-gray);
+        }
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        .filter-select {
+            padding: 14px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--bg-gray);
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+        .calendar-btn {
+            background: var(--eu-gold);
+            color: var(--eu-blue);
+            border: none;
+            padding: 14px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .calendar-btn:hover { background: #FFD633; }
+
+        /* ETKİNLİKLER GRID LISTESI */
+        .events-grid-section {
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+        .results-count {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 25px;
+        }
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            border-color: var(--eu-gold);
+        }
+        .event-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            background: #cbd5e1;
+        }
+        .event-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+        .event-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        .event-card:hover .event-title { color: var(--eu-blue); }
+        .event-date {
+            font-size: 12px;
+            color: #d97706;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #fef3c7;
+            padding: 6px 10px;
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        /* FOOTER */
+        .eu-footer {
+            background: var(--eu-blue); color: var(--white); padding: 40px 5%;
+            margin-top: 40px; display: flex; align-items: center; gap: 30px;
+        }
+        .eu-footer p { font-size: 12px; opacity: 0.9; margin: 0; }
+        .eu-footer h4 { font-family: 'Montserrat', sans-serif; font-size: 16px; margin-bottom: 5px; color: var(--eu-gold); }
+
+        /* MOBİL UYUM */
+        @media (max-width: 768px) {
+            .filter-container { flex-direction: column; margin: -20px 15px 20px 15px; padding: 15px; }
+            .search-box, .filter-select, .calendar-btn { width: 100%; }
+            .desktop-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- KURUMSAL BAŞLIK -->
+    <header class="header">
+        <div class="logo-group">
+            <div class="eu-flag"><i class="fas fa-flag-eu"></i></div>
+            <div class="logo-text">BSB-LOGINET<br><span>Interreg NEXT Black Sea Basin</span></div>
+        </div>
+        
+        <nav class="desktop-nav">
+            <a href="index.html"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="haberler.html"><i class="fas fa-newspaper"></i> Haberler</a>
+            <a href="etkinlikler.html" class="active"><i class="fas fa-calendar-alt"></i> Etkinlikler</a>
+            <a href="bsb-connect.html" class="btn-b2b"><i class="fas fa-handshake"></i> B2B</a>
+            <a href="#"><i class="fas fa-route"></i> CO2 Rota Aracı</a>
+            <a href="#"><i class="fas fa-book"></i> Bilgi Bankası</a>
+        </nav>
+    </header>
+
+    <!-- HERO ALANI -->
+    <section class="page-hero">
+        <h1>ETKİNLİKLER</h1>
+        <div class="breadcrumb"><a href="index.html">ANASAYFA</a> › ETKİNLİKLER</div>
+    </section>
+
+    <!-- FİLTRELEME VE ARAMA -->
+    <div class="filter-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Etkinliklerde ara..." id="eventSearch" onkeyup="filterEvents()">
+        </div>
+        <select class="filter-select" id="dateFilter" onchange="filterEvents()">
+            <option value="">Tüm Tarihler</option>
+            <option value="2026-07">Temmuz 2026</option>
+            <option value="2026-08">Ağustos 2026</option>
+        </select>
+        <button class="calendar-btn"><i class="fas fa-calendar-check"></i> Etkinlik Takvimi</button>
+    </div>
+
+    <!-- ETKİNLİKLER LİSTESİ (GRID) -->
+    <section class="events-grid-section">
+        <div class="results-count" id="resultCount">3 sonuç bulundu</div>
+        
+        <div class="events-grid" id="eventsGrid">
+            
+            <div class="event-card" onclick="location.href='etkinlik-detay.html?id=1'">
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=600" class="event-img" alt="Etkinlik">
+                <div class="event-body">
+                    <div class="event-title">Dijital Beceriler ve Yeşil Lojistik Çevrim İçi Atölye Çalışması</div>
+                    <div class="event-date"><i class="far fa-clock"></i> 28 Temmuz 2026</div>
+                </div>
+            </div>
+
+            <div class="event-card" onclick="location.href='etkinlik-detay.html?id=2'">
+                <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=600" class="event-img" alt="Etkinlik">
+                <div class="event-body">
+                    <div class="event-title">Genç Lojistikçiler Hackathonu Başlangıç ve Mentorluk Kampı</div>
+                    <div class="event-date"><i class="far fa-clock"></i> 15 Ağustos 2026</div>
+                </div>
+            </div>
+
+            <div class="event-card" onclick="location.href='etkinlik-detay.html?id=3'">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" class="event-img" alt="Etkinlik">
+                <div class="event-body">
+                    <div class="event-title">Karadeniz Bölgesel Lojistik Zirvesi ve Paydaş Buluşması</div>
+                    <div class="event-date"><i class="far fa-clock"></i> 10 Eylül 2026</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- AB GÖRÜNÜRLÜK FOOTER -->
+    <footer class="eu-footer">
+        <i class="fas fa-flag-eu" style="font-size: 64px;"></i>
+        <div>
+            <h4>Black Sea Basin Sustainable Logistics and Cooperation Network (BSB-LOGINET)</h4>
+            <p>Bu platform, Avrupa Birliği'nin finansal desteğiyle Interreg NEXT Karadeniz Havzası Programı kapsamında yürütülmektedir. Proje lideri Samsun Ticaret ve Sanayi Odası (Türkiye), ortakları Varna TSO (Bulgaristan) ve Acara TSO'dur (Gürcistan).</p>
+        </div>
+    </footer>
+
+    <script>
+        // Etkinlik Arama Filtreleme Simülasyonu
+        function filterEvents() {
+            let input = document.getElementById('eventSearch').value.toLowerCase();
+            let cards = document.getElementsByClassName('event-card');
+            let count = 0;
+
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getElementsByClassName('event-title')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "flex";
+                    count++;
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+            document.getElementById('resultCount').innerText = count + " sonuç bulundu";
+        }
+    </script>
+</body>
+</html>
