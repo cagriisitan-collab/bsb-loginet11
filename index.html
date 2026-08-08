@@ -98,7 +98,7 @@
             color: var(--white) !important;
         }
         .btn-ai i { color: var(--eu-gold); }
-        .btn-connect {
+        .btn-b2b {
             background: var(--eu-gold) !important;
             color: var(--eu-blue) !important;
             font-weight: 700 !important;
@@ -247,7 +247,7 @@
         }
         .action-btn:hover { background: #FFD633; }
 
-        /* ARIA TARZI TAM EKRAN GÜMRÜK ASİSTANI (MODAL / FULL APP) */
+        /* ARIA TARZI GÜMRÜK ASİSTANI ÇALIŞMA ALANI (FULL SCREEN WORKSPACE) */
         .ai-workspace-modal {
             position: fixed;
             top: 0;
@@ -413,7 +413,7 @@
             .logo-text { font-size: 18px; }
             .eu-flag { padding-right: 10px; gap: 5px; }
             .eu-footer { flex-direction: column; text-align: center; }
-            .ai-sidebar { display: none; } /* Mobilde sidebar gizlenir, tam ekran chat kalır */
+            .ai-sidebar { display: none; }
         }
     </style>
 </head>
@@ -429,10 +429,9 @@
         <nav class="desktop-nav">
             <a href="#" class="active"><i class="fas fa-home"></i> Ana Sayfa</a>
             <a onclick="openAiWorkspace()" class="btn-ai"><i class="fas fa-robot"></i> Gümrük Asistanı</a>
-            <a href="bsb-connect.html"><i class="fas fa-project-diagram"></i> BSB-Connect Borsa</a>
+            <a href="bsb-connect.html" class="btn-b2b"><i class="fas fa-handshake"></i> B2B</a>
             <a href="#"><i class="fas fa-route"></i> CO2 Rota Aracı</a>
-            <a href="#"><i class="fas fa-book-open"></i> Proje Çıktıları</a>
-            <a href="bsb-connect.html" class="btn-connect"><i class="fas fa-sign-in-alt"></i> Firma Girişi</a>
+            <a href="#"><i class="fas fa-book"></i> Bilgi Bankası</a>
         </nav>
         
         <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
