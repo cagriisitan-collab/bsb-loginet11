@@ -448,7 +448,7 @@
             ],
             interactions: ol.interaction.defaults.defaults({mouseWheelZoom: false}),
             view: new ol.View({
-                center: ol.proj.fromLonLat([31.5, 42.0]), // İstanbul / Marmara - Karadeniz merkezli görünüm
+                center: ol.proj.fromLonLat([31.5, 42.0]),
                 zoom: 6.2,
                 minZoom: 5.5,
                 maxZoom: 10,
@@ -465,12 +465,12 @@
             });
         });
 
-        // Tüm Stratejik Limanlar (İstanbul, Tekirdağ, Zonguldak, Sinop vb. dahil)
+        // Tüm Stratejik Limanlar (Samsun ve Batum dış çeperi kırmızı, içi beyaz; Varna Bulgar bayrağı renklerinde)
         const portsData = [
-            // --- PROJE ORTAKLARI (Özel Bayrak Renkleri) ---
-            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#E30A17", strokeColor: "#FFFFFF" }, // Kırmızı-Beyaz (Türk Bayrağı)
-            { name: "Varna Limanı (BG - Ortak)", lon: 27.91, lat: 43.21, type: "partner", fillColor: "#00966E", strokeColor: "#D62612" }, // Beyaz-Yeşil-Kırmızı (Bulgar Bayrağından ilham)
-            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FF0000", strokeColor: "#FFFFFF" }, // Kırmızı-Beyaz (Gürcü Bayrağı)
+            // --- PROJE ORTAKLARI (Özel Renkler) ---
+            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#FFFFFF", strokeColor: "#E30A17" }, // İçi Beyaz, Dış Çerçevesi Kırmızı
+            { name: "Varna Limanı (BG - Ortak)", lon: 27.91, lat: 43.21, type: "partner", fillColor: "#00966E", strokeColor: "#D62612" }, // Bulgaristan Renkleri
+            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FFFFFF", strokeColor: "#FF0000" }, // İçi Beyaz, Dış Çerçevesi Kırmızı (Samsun ile aynı konsept)
 
             // --- TÜRKİYE (Marmara & Karadeniz Kıyıları) ---
             { name: "Ambarlı Limanı / İstanbul", lon: 28.70, lat: 40.97, type: "std" },
@@ -517,21 +517,22 @@
                 lon: port.lon
             });
 
-            // Ortak limanlar bayrak renklerinde, diğerleri AB Mavi-Sarısı tonlarında
             let fillColor = port.type === "partner" ? port.fillColor : '#003399';
             let strokeColor = port.type === "partner" ? port.strokeColor : '#FFCC00';
-            let radiusSize = port.type === "partner" ? 15 : 12; // Ortak limanlar daha belirgin büyük
+            let radiusSize = port.type === "partner" ? 15 : 12;
+            // Çapa ikonu rengi: Ortak limanlarda arka plan beyaz olduğu için çapa koyu renk (kırmızı/mavi) yapılır, standartlarda beyaz kalır.
+            let anchorColor = (port.name.includes("Samsun") || port.name.includes("Batum")) ? '#E30A17' : '#FFFFFF';
 
             feature.setStyle(new ol.style.Style({
                 image: new ol.style.Circle({
                     radius: radiusSize,
                     fill: new ol.style.Fill({ color: fillColor }),
-                    stroke: new ol.style.Stroke({ color: strokeColor, width: 2.5 })
+                    stroke: new ol.style.Stroke({ color: strokeColor, width: 3 })
                 }),
                 text: new ol.style.Text({
-                    text: '\uf13d', // Net çapa (Anchor) ikonu
+                    text: '\uf13d', // Çapa ikonu
                     font: '900 12px "Font Awesome 6 Free"',
-                    fill: new ol.style.Fill({ color: '#FFFFFF' }),
+                    fill: new ol.style.Fill({ color: anchorColor }),
                     textAlign: 'center',
                     textBaseline: 'middle'
                 })
