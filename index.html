@@ -332,17 +332,17 @@
         <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- 1. BÖLÜM: GENİŞLETİLMİŞ KARADENİZ HAVZASI HARİTASI VE LİMANLAR -->
+    <!-- 1. BÖLÜM: KARADENİZ HAVZASI ODAKLI HARİTA VE TÜM LİMANLAR -->
     <section class="hero-map-section">
         <div class="map-card">
             <div class="card-header">
-                <span><i class="fas fa-globe-europe"></i> Karadeniz Havzası Stratejik Deniz Limanları & Canlı Radar</span>
+                <span><i class="fas fa-globe-europe"></i> Karadeniz Havzası Tüm Stratejik Deniz Limanları & Canlı Radar</span>
                 <span style="font-size: 12px; color: var(--text-muted);"><i class="fas fa-circle" style="color: #10b981;"></i> Canlı Bağlantı</span>
             </div>
             
             <div class="map-wrapper">
                 <div class="map-filters">
-                    <button class="filter-btn active"><i class="fas fa-anchor"></i> Tüm Limanlar</button>
+                    <button class="filter-btn active"><i class="fas fa-anchor"></i> Tüm Limanlar (TR, BG, RO, UA, RU, GE)</button>
                 </div>
                 <div id="map"></div>
             </div>
@@ -439,8 +439,8 @@
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
-        // Karadeniz Havzası Odaklı Sınırlar
-        const blackSeaExtent = ol.proj.transformExtent([25.0, 39.0, 45.0, 48.0], 'EPSG:4326', 'EPSG:3857');
+        // Karadeniz Havzası Sınırları (Odessa ve Azak Denizi dahil üst havzayı tam kapsayacak şekilde yukarı kaydırıldı)
+        const blackSeaExtent = ol.proj.transformExtent([25.0, 40.0, 45.0, 49.0], 'EPSG:4326', 'EPSG:3857');
 
         const map = new ol.Map({
             target: 'map',
@@ -449,19 +449,16 @@
                     source: new ol.source.OSM()
                 })
             ],
-            // Sayfa akışını bozmamak için haritada scroll zoom varsayılan olarak kilitlenir, 
-            // kullanıcı haritaya tıkladıktan sonra zoom yapabilir.
             interactions: ol.interaction.defaults.defaults({mouseWheelZoom: false}),
             view: new ol.View({
-                center: ol.proj.fromLonLat([34.0, 42.5]),
+                center: ol.proj.fromLonLat([34.0, 43.8]), // Merkez yukarı (Odessa/Kırım hattını kapsayacak şekilde) kaydırıldı
                 zoom: 6.0,
-                minZoom: 5.5, // Zoom-out sınırı (Karadeniz dışına taşmayı engeller)
+                minZoom: 5.5,
                 maxZoom: 10,
                 extent: blackSeaExtent
             })
         });
 
-        // Kullanıcı haritaya tıklayınca/dokununca mouse tekerleğiyle zoom aktif olur
         let mapEl = document.getElementById('map');
         mapEl.addEventListener('click', function() {
             map.getInteractions().forEach(function(interaction) {
@@ -471,17 +468,43 @@
             });
         });
 
-        // Liman Verileri ve Doğru Çapa İkonu (`\f56f` FontAwesome Anchor kodu)
+        // Karadeniz Havzasındaki TÜM Stratejik Limanlar (Türkiye, Bulgaristan, Romanya, Ukrayna, Rusya, Gürcistan)
         const portsData = [
+            // Türkiye Kıyıları
             { name: "Samsun Limanı (TR)", lon: 36.33, lat: 41.28 },
+            { name: "Trabzon Limanı (TR)", lon: 39.72, lat: 41.00 },
+            { name: "Zonguldak Limanı (TR)", lon: 31.79, lat: 41.45 },
+            { name: "Sinop Limanı (TR)", lon: 35.15, lat: 42.02 },
+            { name: "Ordu Limanı (TR)", lon: 37.88, lat: 40.98 },
+            { name: "Giresun Limanı (TR)", lon: 38.38, lat: 40.92 },
+            { name: "Rize Limanı (TR)", lon: 40.51, lat: 41.03 },
+            { name: "Hopa Limanı (TR)", lon: 41.42, lat: 41.39 },
+            { name: "Bartın / İnebolu Limanı (TR)", lon: 33.75, lat: 41.97 },
+            { name: "Ereğli Limanı (TR)", lon: 31.41, lat: 41.28 },
+            
+            // Bulgaristan Kıyıları
             { name: "Varna Limanı (BG)", lon: 27.91, lat: 43.21 },
+            { name: "Burgaz Limanı (BG)", lon: 27.46, lat: 42.50 },
+            
+            // Romanya Kıyıları
+            { name: "Köstence (Constanta) Limanı (RO)", lon: 28.65, lat: 44.15 },
+            { name: "Midia Limanı (RO)", lon: 28.65, lat: 44.30 },
+            
+            // Ukrayna Kıyıları
+            { name: "Odessa Limanı (UA)", lon: 30.73, lat: 46.48 },
+            { name: "Chornomorsk Limanı (UA)", lon: 30.65, lat: 46.30 },
+            { name: "Pivdenny (Yuzhne) Limanı (UA)", lon: 31.00, lat: 46.62 },
+            { name: "Mariupol Limanı (UA)", lon: 37.55, lat: 47.05 },
+            
+            // Rusya Kıyıları
+            { name: "Novorossiysk Limanı (RU)", lon: 37.78, lat: 44.72 },
+            { name: "Soçi Limanı (RU)", lon: 39.72, lat: 43.58 },
+            { name: "Tuapse Limanı (RU)", lon: 39.07, lat: 44.10 },
+            
+            // Gürcistan Kıyıları
             { name: "Batum Limanı (GE)", lon: 41.63, lat: 41.61 },
             { name: "Poti Limanı (GE)", lon: 41.67, lat: 42.15 },
-            { name: "Köstence Limanı (RO)", lon: 28.65, lat: 44.15 },
-            { name: "Burgaz Limanı (BG)", lon: 27.46, lat: 42.50 },
-            { name: "Trabzon Limanı (TR)", lon: 39.72, lat: 41.00 },
-            { name: "Novorossiysk Limanı (RU)", lon: 37.78, lat: 44.72 },
-            { name: "Odessa Limanı (UA)", lon: 30.73, lat: 46.48 }
+            { name: "Kulevi Terminali (GE)", lon: 41.68, lat: 42.30 }
         ];
 
         const vectorSource = new ol.source.Vector();
@@ -503,7 +526,7 @@
                     stroke: new ol.style.Stroke({ color: '#FFCC00', width: 2 }) // AB Sarısı Çerçeve
                 }),
                 text: new ol.style.Text({
-                    text: '\uf13d', // Doğru FontAwesome Çapa (Anchor) Unicode Kodu
+                    text: '\uf13d', // Net ve doğru çapa (Anchor) ikonu
                     font: '900 13px "Font Awesome 6 Free"',
                     fill: new ol.style.Fill({ color: '#FFFFFF' }), // Beyaz Çapa
                     textAlign: 'center',
