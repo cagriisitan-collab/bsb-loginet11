@@ -436,7 +436,7 @@
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
-        const marmaraBlackSeaExtent = ol.proj.transformExtent([25.0, 39.5, 43.5, 48.5], 'EPSG:4326', 'EPSG:3857');
+        const marmaraBlackSeaExtent = ol.proj.transformExtent([24.0, 39.0, 44.5, 49.5], 'EPSG:4326', 'EPSG:3857');
 
         const map = new ol.Map({
             target: 'map',
@@ -447,9 +447,9 @@
             ],
             interactions: ol.interaction.defaults.defaults({mouseWheelZoom: false}),
             view: new ol.View({
-                center: ol.proj.fromLonLat([31.5, 42.0]),
-                zoom: 6.2,
-                minZoom: 5.5,
+                center: ol.proj.fromLonLat([31.5, 43.5]), // Zoom out yapılarak yukarı kaydırıldı, Odessa tam görünür hale geldi
+                zoom: 5.7, // Daha geniş açılı görünüm
+                minZoom: 5.0,
                 maxZoom: 10,
                 extent: marmaraBlackSeaExtent
             })
@@ -464,15 +464,13 @@
             });
         });
 
-        // --- GERÇEKÇİ ANİMASYONLU DENİZ ROTALARI ---
+        // --- GERÇEKÇİ ANİMASYONLU DENİZ ROTALARI (Varna-Samsun kaldırıldı, gerçek hatlar korundu) ---
         const routeSource = new ol.source.Vector();
         const routeLayer = new ol.layer.Vector({ source: routeSource, zIndex: 5 });
         map.addLayer(routeLayer);
 
-        // Gerçek lojistik hatlarına uygun rotalar (Samsun-Novorossiysk, Samsun-Batum, İstanbul-Varna vb.)
         const seaRoutesCoords = [
-            [[36.33, 41.28], [27.91, 43.21]], // Samsun - Varna
-            [[36.33, 41.28], [41.63, 41.61]], // Samsun - Batum
+            [[36.33, 41.28], [41.63, 41.61]], // Samsun - Batum (Ana Ortak Hattı)
             [[28.70, 40.97], [27.91, 43.21]], // İstanbul - Varna
             [[28.65, 44.15], [30.73, 46.48]], // Köstence - Odessa
             [[36.33, 41.28], [37.78, 44.72]]  // Samsun - Novorossiysk
@@ -502,12 +500,12 @@
         }
         animateNeonRoutes();
 
-        // Liman Verileri (Samsun: Kırmızı dış, Beyaz iç | Batum: Beyaz dış, Kırmızı iç)
+        // Liman Verileri (Samsun: Tam Kırmızı, Beyaz Çapa | Batum: Tam Beyaz, Kırmızı Çapa)
         const portsData = [
             // --- PROJE ORTAKLARI ---
-            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#E30A17", strokeColor: "#FFFFFF" }, // Samsun: Kırmızı Top, Beyaz Çerçeve (veya tam tersi talep: Samsun tam kırmızı, iç beyaz)
+            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#E30A17", strokeColor: "#FFFFFF" }, // Tam Kırmızı Top, Beyaz Çapa
             { name: "Varna Limanı (BG - Ortak)", lon: 27.91, lat: 43.21, type: "partner", fillColor: "#00966E", strokeColor: "#D62612" }, 
-            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FFFFFF", strokeColor: "#E30A17" }, // Batum: Beyaz Top, Kırmızı Çerçeve
+            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FFFFFF", strokeColor: "#E30A17" }, // Tam Beyaz Top, Kırmızı Çapa
 
             // --- DİĞER LİMANLAR ---
             { name: "Ambarlı Limanı / İstanbul", lon: 28.70, lat: 40.97, type: "std" },
@@ -552,10 +550,10 @@
             let strokeColor = port.type === "partner" ? port.strokeColor : '#FFCC00';
             let radiusSize = port.type === "partner" ? 15 : 12;
             
-            // Samsun (Full Kırmızı, Beyaz Çapa) vs Batum (Full Beyaz, Kırmızı Çapa)
+            // Samsun (Kırmızı top -> Beyaz çapa) vs Batum (Beyaz top -> Kırmızı çapa)
             let anchorColor = '#FFFFFF';
             if (port.name.includes("Batum")) {
-                anchorColor = '#E30A17'; // Batum beyaz top olduğu için çapa kırmızı
+                anchorColor = '#E30A17';
             }
 
             feature.setStyle(new ol.style.Style({
