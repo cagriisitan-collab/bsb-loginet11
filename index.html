@@ -329,11 +329,11 @@
         <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
     </header>
 
-    <!-- 1. BÖLÜM: MARMARA - KARADENİZ KAPSAMLI HARİTA VE LİMANLAR -->
+    <!-- 1. BÖLÜM: MARMARA - KARADENİZ KAPSAMLI HARİTA VE ANİMASYONLU ROTALAR -->
     <section class="hero-map-section">
         <div class="map-card">
             <div class="card-header">
-                <span><i class="fas fa-globe-europe"></i> Marmara & Karadeniz Havzası Limanları ve Canlı Radar</span>
+                <span><i class="fas fa-globe-europe"></i> Marmara & Karadeniz Stratejik Deniz Rotaları Canlı Radarı</span>
                 <span style="font-size: 12px; color: var(--text-muted);"><i class="fas fa-circle" style="color: #10b981;"></i> Canlı Bağlantı</span>
             </div>
             
@@ -436,7 +436,6 @@
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
-        // Marmara ve Karadeniz Havzasını tam kapsayan coğrafi sınırlar
         const marmaraBlackSeaExtent = ol.proj.transformExtent([25.0, 39.5, 43.5, 48.5], 'EPSG:4326', 'EPSG:3857');
 
         const map = new ol.Map({
@@ -465,14 +464,52 @@
             });
         });
 
-        // Tüm Stratejik Limanlar (Samsun ve Batum dış çeperi kırmızı, içi beyaz; Varna Bulgar bayrağı renklerinde)
-        const portsData = [
-            // --- PROJE ORTAKLARI (Özel Renkler) ---
-            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#FFFFFF", strokeColor: "#E30A17" }, // İçi Beyaz, Dış Çerçevesi Kırmızı
-            { name: "Varna Limanı (BG - Ortak)", lon: 27.91, lat: 43.21, type: "partner", fillColor: "#00966E", strokeColor: "#D62612" }, // Bulgaristan Renkleri
-            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FFFFFF", strokeColor: "#FF0000" }, // İçi Beyaz, Dış Çerçevesi Kırmızı (Samsun ile aynı konsept)
+        // --- GERÇEKÇİ ANİMASYONLU DENİZ ROTALARI ---
+        const routeSource = new ol.source.Vector();
+        const routeLayer = new ol.layer.Vector({ source: routeSource, zIndex: 5 });
+        map.addLayer(routeLayer);
 
-            // --- TÜRKİYE (Marmara & Karadeniz Kıyıları) ---
+        // Gerçek lojistik hatlarına uygun rotalar (Samsun-Novorossiysk, Samsun-Batum, İstanbul-Varna vb.)
+        const seaRoutesCoords = [
+            [[36.33, 41.28], [27.91, 43.21]], // Samsun - Varna
+            [[36.33, 41.28], [41.63, 41.61]], // Samsun - Batum
+            [[28.70, 40.97], [27.91, 43.21]], // İstanbul - Varna
+            [[28.65, 44.15], [30.73, 46.48]], // Köstence - Odessa
+            [[36.33, 41.28], [37.78, 44.72]]  // Samsun - Novorossiysk
+        ];
+
+        const animatedRouteStyle = new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#003399',
+                width: 4,
+                lineDash: [12, 16]
+            })
+        });
+
+        seaRoutesCoords.forEach(coords => {
+            const lineString = new ol.geom.LineString(coords.map(c => ol.proj.fromLonLat(c)));
+            const feature = new ol.Feature({ geometry: lineString });
+            feature.setStyle(animatedRouteStyle);
+            routeSource.addFeature(feature);
+        });
+
+        let dashOffset = 0;
+        function animateNeonRoutes() {
+            dashOffset -= 0.5;
+            animatedRouteStyle.getStroke().setLineDashOffset(dashOffset);
+            routeSource.changed();
+            requestAnimationFrame(animateNeonRoutes);
+        }
+        animateNeonRoutes();
+
+        // Liman Verileri (Samsun: Kırmızı dış, Beyaz iç | Batum: Beyaz dış, Kırmızı iç)
+        const portsData = [
+            // --- PROJE ORTAKLARI ---
+            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#E30A17", strokeColor: "#FFFFFF" }, // Samsun: Kırmızı Top, Beyaz Çerçeve (veya tam tersi talep: Samsun tam kırmızı, iç beyaz)
+            { name: "Varna Limanı (BG - Ortak)", lon: 27.91, lat: 43.21, type: "partner", fillColor: "#00966E", strokeColor: "#D62612" }, 
+            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FFFFFF", strokeColor: "#E30A17" }, // Batum: Beyaz Top, Kırmızı Çerçeve
+
+            // --- DİĞER LİMANLAR ---
             { name: "Ambarlı Limanı / İstanbul", lon: 28.70, lat: 40.97, type: "std" },
             { name: "Haydarpaşa Limanı / İstanbul", lon: 29.02, lat: 40.99, type: "std" },
             { name: "Tekirdağ / Asyaport Limanı", lon: 27.45, lat: 40.98, type: "std" },
@@ -486,21 +523,15 @@
             { name: "Rize Limanı", lon: 40.51, lat: 41.03, type: "std" },
             { name: "Hopa Limanı", lon: 41.42, lat: 41.39, type: "std" },
             { name: "Trabzon Limanı", lon: 39.72, lat: 41.00, type: "std" },
-
-            // --- BULGARİSTAN & ROMANYA ---
             { name: "Burgaz Limanı (BG)", lon: 27.46, lat: 42.50, type: "std" },
             { name: "Köstence (Constanta) Limanı (RO)", lon: 28.65, lat: 44.15, type: "std" },
             { name: "Midia Limanı (RO)", lon: 28.65, lat: 44.30, type: "std" },
-
-            // --- UKRAYNA & RUSYA ---
             { name: "Odessa Limanı (UA)", lon: 30.73, lat: 46.48, type: "std" },
             { name: "Chornomorsk Limanı (UA)", lon: 30.65, lat: 46.30, type: "std" },
             { name: "Pivdenny (Yuzhne) Limanı (UA)", lon: 31.00, lat: 46.62, type: "std" },
             { name: "Novorossiysk Limanı (RU)", lon: 37.78, lat: 44.72, type: "std" },
             { name: "Soçi Limanı (RU)", lon: 39.72, lat: 43.58, type: "std" },
             { name: "Tuapse Limanı (RU)", lon: 39.07, lat: 44.10, type: "std" },
-
-            // --- GÜRCİSTAN (Diğer) ---
             { name: "Poti Limanı (GE)", lon: 41.67, lat: 42.15, type: "std" },
             { name: "Kulevi Terminali (GE)", lon: 41.68, lat: 42.30, type: "std" }
         ];
@@ -520,8 +551,12 @@
             let fillColor = port.type === "partner" ? port.fillColor : '#003399';
             let strokeColor = port.type === "partner" ? port.strokeColor : '#FFCC00';
             let radiusSize = port.type === "partner" ? 15 : 12;
-            // Çapa ikonu rengi: Ortak limanlarda arka plan beyaz olduğu için çapa koyu renk (kırmızı/mavi) yapılır, standartlarda beyaz kalır.
-            let anchorColor = (port.name.includes("Samsun") || port.name.includes("Batum")) ? '#E30A17' : '#FFFFFF';
+            
+            // Samsun (Full Kırmızı, Beyaz Çapa) vs Batum (Full Beyaz, Kırmızı Çapa)
+            let anchorColor = '#FFFFFF';
+            if (port.name.includes("Batum")) {
+                anchorColor = '#E30A17'; // Batum beyaz top olduğu için çapa kırmızı
+            }
 
             feature.setStyle(new ol.style.Style({
                 image: new ol.style.Circle({
@@ -530,7 +565,7 @@
                     stroke: new ol.style.Stroke({ color: strokeColor, width: 3 })
                 }),
                 text: new ol.style.Text({
-                    text: '\uf13d', // Çapa ikonu
+                    text: '\uf13d',
                     font: '900 12px "Font Awesome 6 Free"',
                     fill: new ol.style.Fill({ color: anchorColor }),
                     textAlign: 'center',
@@ -541,7 +576,6 @@
             vectorSource.addFeature(feature);
         });
 
-        // Liman Tıklama Olayı (MarineTraffic Iframe Yükleme)
         map.on('singleclick', function(evt) {
             let clickedFeature = null;
             map.forEachFeatureAtPixel(evt.pixel, function(feature) {
@@ -549,7 +583,7 @@
                 return true;
             });
 
-            if (clickedFeature) {
+            if (clickedFeature && clickedFeature.get('portName')) {
                 const name = clickedFeature.get('portName');
                 const lat = clickedFeature.get('lat');
                 const lon = clickedFeature.get('lon');
@@ -569,7 +603,6 @@
             document.getElementById('modalPortBody').innerHTML = '';
         }
 
-        // Gümrük Asistanı Modal Kontrolleri
         function openAiWorkspace() {
             document.getElementById('aiWorkspaceModal').classList.add('active');
         }
