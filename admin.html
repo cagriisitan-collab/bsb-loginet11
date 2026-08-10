@@ -3,60 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSB-LOGINET | Multi-Lang Secure CMS</title>
+    <title>BSB-LOGINET | Gelişmiş Yönetim Paneli</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
         
         :root {
             --bg-light: #f5f5f7; 
-            --panel-bg: rgba(255, 255, 255, 0.65);
-            --panel-border: rgba(255, 255, 255, 0.8);
+            --panel-bg: rgba(255, 255, 255, 0.7);
+            --panel-border: rgba(255, 255, 255, 0.9);
             --eu-blue: #003399;
             --eu-gold: #FFCC00;
             --text-main: #1d1d1f;
             --text-muted: #86868b;
-            --input-bg: rgba(255, 255, 255, 0.5);
+            --input-bg: rgba(255, 255, 255, 0.6);
             --input-border: rgba(0, 0, 0, 0.08);
             --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
             --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.08);
+            --danger: #ef4444;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-main);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(0, 51, 153, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(255, 204, 0, 0.05) 0px, transparent 50%);
-            background-attachment: fixed;
+            font-family: 'Inter', sans-serif; background-color: var(--bg-light); color: var(--text-main);
+            height: 100vh; overflow: hidden; display: flex;
+            background-image: radial-gradient(at 0% 0%, rgba(0, 51, 153, 0.05) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 204, 0, 0.05) 0px, transparent 50%);
         }
 
         .glass-panel {
-            background: var(--panel-bg);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid var(--panel-border);
-            border-radius: 20px;
-            box-shadow: var(--shadow-soft);
+            background: var(--panel-bg); backdrop-filter: blur(24px) saturate(180%); -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--panel-border); border-radius: 20px; box-shadow: var(--shadow-soft);
         }
 
-        /* GÜVENLİK GİRİŞ EKRANI */
+        /* 1. GÜVENLİK GİRİŞ EKRANI (LOJİSTİK LİMAN ARKA PLANI) */
         #auth-guard {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--bg-light); z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
-            background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=2000');
+            background: var(--bg-light); z-index: 9999; display: flex; justify-content: center; align-items: center;
+            /* Lojistik ve çalışan liman görseli */
+            background-image: url('https://images.unsplash.com/photo-1586528116311-ad8ed7c80a30?auto=format&fit=crop&q=80&w=2000');
             background-size: cover; background-position: center;
         }
-        #auth-guard::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(245, 245, 247, 0.7); backdrop-filter: blur(10px); }
+        #auth-guard::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 51, 153, 0.6); backdrop-filter: blur(5px); }
         .login-card { position: relative; z-index: 10; width: 100%; max-width: 420px; padding: 40px; text-align: center; box-shadow: var(--shadow-float); }
-        .login-card h2 { font-family: 'Montserrat'; font-size: 24px; font-weight: 800; margin-bottom: 5px; letter-spacing: -0.5px; color: var(--text-main); }
+        .login-card h2 { font-family: 'Montserrat'; font-size: 24px; font-weight: 800; margin-bottom: 5px; color: var(--text-main); }
         .login-card h2 span { color: var(--eu-blue); }
         .login-card p { color: var(--text-muted); font-size: 13px; margin-bottom: 30px; font-weight: 500; }
         
@@ -64,229 +54,260 @@
         .input-group i { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); color: var(--text-muted); }
         .input-group input { width: 100%; padding: 14px 14px 14px 45px; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px; color: var(--text-main); font-size: 14px; outline: none; transition: 0.3s; }
         .input-group input:focus { background: white; border-color: var(--eu-blue); box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.1); }
-        
-        .btn-solid { width: 100%; padding: 14px; background: var(--eu-blue); color: white; border: none; border-radius: 12px; font-family: 'Montserrat'; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 14px rgba(0, 51, 153, 0.2); display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-solid { width: 100%; padding: 14px; background: var(--eu-blue); color: white; border: none; border-radius: 12px; font-family: 'Montserrat'; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 14px rgba(0, 51, 153, 0.2); }
         .btn-solid:hover { background: #002266; transform: scale(0.98); }
 
-        /* ANA ÇALIŞMA ALANI */
+        /* 2. WORKSPACE & SIDEBAR */
         #workspace { display: none; width: 100%; height: 100%; }
-        
-        /* SIDEBAR */
-        .sidebar { width: 280px; padding: 30px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--panel-border); background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); }
-        .brand { font-family: 'Montserrat'; font-size: 20px; font-weight: 800; margin-bottom: 40px; padding-left: 10px; color: var(--text-main); letter-spacing: -0.5px;}
+        .sidebar { width: 280px; padding: 30px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--panel-border); background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); z-index: 10; }
+        .brand { font-family: 'Montserrat'; font-size: 20px; font-weight: 800; margin-bottom: 40px; padding-left: 10px; color: var(--text-main); }
         .brand span { color: var(--eu-blue); }
         .nav-item { padding: 12px 15px; margin-bottom: 8px; border-radius: 12px; color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 12px; transition: 0.3s; cursor: pointer; }
         .nav-item:hover, .nav-item.active { background: white; color: var(--eu-blue); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
         
-        .sys-status { margin-top: auto; padding: 15px; border-radius: 16px; background: white; border: 1px solid var(--panel-border); font-size: 11px; color: var(--text-muted); box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
-        .status-dot { display: inline-block; width: 8px; height: 8px; background: #34c759; border-radius: 50%; margin-right: 5px; }
-
-        /* MAIN CONTENT */
+        /* 3. MAIN CONTENT AREA */
         .main-content { flex-grow: 1; padding: 40px 50px; overflow-y: auto; }
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .top-header h1 { font-family: 'Montserrat'; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
-        
-        /* ARAYÜZ DİLİ DEĞİŞTİRİCİ (i18n) */
-        .ui-lang-select { 
-            background: var(--input-bg); border: 1px solid var(--input-border); 
-            padding: 8px 15px; border-radius: 12px; font-weight: 600; 
-            color: var(--text-main); outline: none; cursor: pointer;
-        }
-
         .user-profile { display: flex; align-items: center; gap: 15px; background: var(--panel-bg); padding: 6px 15px 6px 6px; border-radius: 30px; border: 1px solid var(--panel-border); box-shadow: var(--shadow-soft); backdrop-filter: blur(10px); }
         .avatar { width: 36px; height: 36px; background: var(--eu-blue); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 14px; }
-        
-        /* FORM GRID */
-        .content-form { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
-        .form-section { padding: 35px; }
-        .form-section h3 { font-family: 'Montserrat'; font-size: 16px; font-weight: 600; margin-bottom: 25px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-        
-        .field-group { margin-bottom: 25px; }
-        .field-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .cms-input, .cms-select, .cms-textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-main); border-radius: 12px; padding: 15px; font-size: 14px; outline: none; transition: 0.3s; font-family: 'Inter', sans-serif; }
-        .cms-input:focus, .cms-select:focus, .cms-textarea:focus { background: white; border-color: var(--eu-blue); box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.05); }
-        .cms-textarea { min-height: 250px; resize: vertical; line-height: 1.6; }
 
-        /* UPLOAD ZONE */
-        .upload-zone { border: 2px dashed rgba(0,0,0,0.1); border-radius: 16px; padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(255,255,255,0.5); }
-        .upload-zone:hover { border-color: var(--eu-blue); background: white; }
-        .upload-zone i { font-size: 40px; color: var(--eu-blue); margin-bottom: 15px; opacity: 0.8; }
-        #preview-box { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-top: 20px; display: none; box-shadow: var(--shadow-soft); }
+        /* VIEW TOGGLER (Sayfalar Arası Geçiş) */
+        .view-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* DATA TABLES (LİSTELEME EKRANLARI) */
+        .data-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .add-btn { background: var(--eu-blue); color: white; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .add-btn:hover { background: #002266; }
+        
+        .data-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .data-table th { padding: 15px; font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; border-bottom: 2px solid var(--input-border); }
+        .data-table td { padding: 15px; font-size: 14px; border-bottom: 1px solid var(--input-border); color: var(--text-main); vertical-align: middle; }
+        .data-table tbody tr { transition: 0.3s; }
+        .data-table tbody tr:hover { background: rgba(255,255,255,0.5); }
+        
+        .type-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+        .type-news { background: #dbeafe; color: #0284c7; }
+        .type-event { background: #fef3c7; color: #d97706; }
+        
+        .action-btns button { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 6px; transition: 0.2s; }
+        .btn-edit { color: var(--eu-blue); } .btn-edit:hover { background: #dbeafe; }
+        .btn-del { color: var(--danger); } .btn-del:hover { background: #fee2e2; }
+
+        /* FORM ELEMANLARI (Ekle/Düzenle) */
+        .form-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        .field-group { margin-bottom: 20px; }
+        .field-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; }
+        .cms-input, .cms-select, .cms-textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px; padding: 15px; font-size: 14px; outline: none; transition: 0.3s; font-family: 'Inter', sans-serif; }
+        .cms-input:focus, .cms-select:focus, .cms-textarea:focus { background: white; border-color: var(--eu-blue); box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.05); }
+        .cms-textarea { min-height: 200px; resize: vertical; }
+
     </style>
 </head>
 <body>
 
-    <!-- LOGIN -->
+    <!-- 1. GÜVENLİK DUVARI (LOGIN) -->
     <div id="auth-guard">
         <div class="login-card glass-panel">
             <h2>BSB-LOGINET</h2>
-            <p data-i18n="login_subtitle">Ortak Ağ Yönetim Paneli</p>
+            <p style="color: white; opacity: 0.9;">Uluslararası Yönetim Ağı</p>
             <form onsubmit="event.preventDefault(); initiateLogin();">
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="E-posta / Email" required>
+                    <input type="email" placeholder="Yönetici E-posta" required>
                 </div>
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Parola / Password" required>
+                    <input type="password" placeholder="Bcrypt Parola" required>
                 </div>
-                <button type="submit" class="btn-solid" id="loginBtn" data-i18n="login_btn">Giriş Yap</button>
+                <button type="submit" class="btn-solid" id="loginBtn">Giriş Yap</button>
             </form>
+            <div style="margin-top: 25px; font-size: 11px; color: rgba(255,255,255,0.7);">
+                <i class="fas fa-shield-alt" style="color: #34c759;"></i> Sunucusuz Edge API & 256-Bit SSL
+            </div>
         </div>
     </div>
 
-    <!-- WORKSPACE -->
+    <!-- 2. WORKSPACE -->
     <div id="workspace">
         <!-- SIDEBAR -->
         <nav class="sidebar">
             <div class="brand">BSB<span>CMS</span></div>
-            <a class="nav-item active"><i class="fas fa-pen-nib"></i> <span data-i18n="menu_content">İçerik Stüdyosu</span></a>
-            <a class="nav-item"><i class="fas fa-building"></i> <span data-i18n="menu_companies">Firma Rehberi</span></a>
-            <a class="nav-item"><i class="fas fa-folder-open"></i> <span data-i18n="menu_docs">YZ Belgeleri</span></a>
             
-            <div class="sys-status">
-                <div style="margin-bottom: 8px; color: var(--text-main); font-weight: 600;"><span class="status-dot"></span> <span data-i18n="sys_active">Sistem Aktif</span></div>
-                <div>Supabase DB | Serverless Edge</div>
+            <a class="nav-item active" onclick="switchView('view-content-list', this)"><i class="fas fa-pen-nib"></i> İçerik Yönetimi</a>
+            <a class="nav-item" onclick="switchView('view-map-manage', this)"><i class="fas fa-map-marked-alt"></i> Harita & Rotalar</a>
+            <a class="nav-item"><i class="fas fa-building"></i> Firma Rehberi</a>
+            <a class="nav-item"><i class="fas fa-robot"></i> YZ Bilgi Bankası</a>
+            <a class="nav-item"><i class="fas fa-cog"></i> Sistem Ayarları</a>
+            
+            <div style="margin-top: auto; padding: 15px; border-radius: 16px; background: white; border: 1px solid var(--panel-border); font-size: 11px; color: var(--text-muted);">
+                <div style="margin-bottom: 8px; color: var(--text-main); font-weight: 600;"><span style="display:inline-block; width:8px; height:8px; background:#34c759; border-radius:50%; margin-right:5px;"></span> Supabase Aktif</div>
+                Sürüm: 2.1.0 Beta
             </div>
         </nav>
 
         <!-- MAIN -->
         <main class="main-content">
             <header class="top-header">
-                <div>
-                    <h1 data-i18n="page_title">İçerik Stüdyosu</h1>
-                </div>
-                
-                <div style="display: flex; gap: 20px; align-items: center;">
-                    <!-- ARAYÜZ DİLİ SEÇİCİ (Ortaklar İçin) -->
-                    <select class="ui-lang-select" onchange="changeAdminUI(this.value)">
-                        <option value="tr">🇹🇷 Türkçe</option>
-                        <option value="en">🇬🇧 English</option>
-                        <option value="bg">🇧🇬 Български</option>
-                        <option value="ge">🇬🇪 ქართული</option>
-                    </select>
-                    
-                    <div class="user-profile">
-                        <div class="avatar">A</div>
-                        <div style="font-size: 13px;">
-                            <div style="font-weight: 600;">Admin User</div>
-                        </div>
-                        <i class="fas fa-sign-out-alt" style="color: var(--text-muted); margin-left: 10px; cursor: pointer;" onclick="location.reload()"></i>
+                <h1 id="pageMainTitle">İçerik Yönetimi</h1>
+                <div class="user-profile">
+                    <div class="avatar">CI</div>
+                    <div style="font-size: 13px;">
+                        <div style="font-weight: 600;">Çağrı Işıtan</div>
+                        <div style="color: var(--text-muted); font-size: 11px;">Sistem Yöneticisi</div>
                     </div>
                 </div>
             </header>
 
-            <div class="content-form">
-                
-                <div class="glass-panel form-section">
-                    <h3 style="color: var(--eu-blue);"><i class="fas fa-edit"></i> <span data-i18n="form_title">Yayın Verileri</span></h3>
-
-                    <div class="field-group">
-                        <label data-i18n="lbl_type">İçerik Türü</label>
-                        <select id="docType" class="cms-select">
-                            <option value="news" data-i18n="opt_news">Haber & Bülten</option>
-                            <option value="events" data-i18n="opt_event">Etkinlik</option>
-                        </select>
+            <!-- A. İÇERİK LİSTESİ (READ / DELETE) -->
+            <div id="view-content-list" class="view-section active">
+                <div class="glass-panel" style="padding: 30px;">
+                    <div class="data-header">
+                        <h3>Yayındaki Haber & Etkinlikler</h3>
+                        <button class="add-btn" onclick="switchView('view-content-form')"><i class="fas fa-plus"></i> Yeni Ekle</button>
                     </div>
-
-                    <div class="field-group">
-                        <label data-i18n="lbl_heading">Başlık</label>
-                        <input type="text" id="docTitle" class="cms-input" placeholder="...">
-                    </div>
-
-                    <div class="field-group">
-                        <label data-i18n="lbl_body">Gövde Metni</label>
-                        <textarea id="docBody" class="cms-textarea" placeholder="..."></textarea>
-                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Başlık</th>
+                                <th>Tür</th>
+                                <th>Tarih</th>
+                                <th>Durum</th>
+                                <th style="text-align: right;">Aksiyon</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600;">Lojistik İhtiyaç Analizi Toplantısı...</td>
+                                <td><span class="type-badge type-news">Haber</span></td>
+                                <td>12 Haz 2026</td>
+                                <td><i class="fas fa-circle" style="color:#10b981; font-size:10px;"></i> Yayında</td>
+                                <td class="action-btns" style="text-align: right;">
+                                    <button class="btn-edit" onclick="alert('Düzenleme modülü açılıyor...')"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-del" onclick="confirm('Bu içeriği silmek istediğinize emin misiniz?')"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;">Dijital Beceriler Atölye Çalışması...</td>
+                                <td><span class="type-badge type-event">Etkinlik</span></td>
+                                <td>28 Tem 2026</td>
+                                <td><i class="fas fa-circle" style="color:#10b981; font-size:10px;"></i> Yayında</td>
+                                <td class="action-btns" style="text-align: right;">
+                                    <button class="btn-edit"><i class="fas fa-edit"></i></button>
+                                    <button class="btn-del"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-
-                <div class="glass-panel form-section" style="height: fit-content;">
-                    <h3 style="color: var(--eu-blue);"><i class="fas fa-image"></i> <span data-i18n="form_media">Medya</span></h3>
-                    
-                    <div class="field-group">
-                        <div class="upload-zone" onclick="document.getElementById('fileUpload').click()">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <h4 data-i18n="upload_title">Fotoğraf Seç</h4>
-                            <input type="file" id="fileUpload" style="display: none;" accept="image/*" onchange="handleImagePreview(event)">
-                        </div>
-                        <img id="preview-box">
-                    </div>
-
-                    <button class="btn-solid" style="margin-top: 20px;" onclick="alert('Veritabanına kaydedildi.')">
-                        <i class="fas fa-paper-plane"></i> <span data-i18n="btn_publish">Canlıya Al</span>
-                    </button>
-                </div>
-
             </div>
+
+            <!-- B. İÇERİK EKLEME/DÜZENLEME FORMU (CREATE / UPDATE) -->
+            <div id="view-content-form" class="view-section">
+                <div class="data-header">
+                    <button class="add-btn" style="background: white; color: var(--eu-blue); border: 1px solid var(--eu-blue);" onclick="switchView('view-content-list')"><i class="fas fa-arrow-left"></i> Listeye Dön</button>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="glass-panel" style="padding: 30px;">
+                        <h3 style="margin-bottom: 20px;"><i class="fas fa-pen"></i> İçerik Detayları</h3>
+                        <div class="field-group">
+                            <label>Türü</label>
+                            <select class="cms-select"><option>Haber</option><option>Etkinlik</option></select>
+                        </div>
+                        <div class="field-group">
+                            <label>Başlık</label>
+                            <input type="text" class="cms-input" placeholder="Haber/Etkinlik başlığı...">
+                        </div>
+                        <div class="field-group">
+                            <label>İçerik Metni</label>
+                            <textarea class="cms-textarea" placeholder="Zengin metin (HTML destekli)..."></textarea>
+                        </div>
+                    </div>
+                    <div class="glass-panel" style="padding: 30px; height: fit-content;">
+                        <h3 style="margin-bottom: 20px;"><i class="fas fa-cog"></i> Yayın Ayarları</h3>
+                        <div class="field-group">
+                            <label>Tarih</label>
+                            <input type="date" class="cms-input">
+                        </div>
+                        <div class="field-group">
+                            <label>Görsel URL</label>
+                            <input type="text" class="cms-input" placeholder="https://unsplash.com/...">
+                        </div>
+                        <button class="btn-solid" style="margin-top: 20px;" onclick="alert('Kayıt Başarılı!'); switchView('view-content-list');"><i class="fas fa-save"></i> Kaydet ve Yayınla</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- C. HARİTA YÖNETİMİ (MAP POINTS CRUD) -->
+            <div id="view-map-manage" class="view-section">
+                <div class="glass-panel" style="padding: 30px; margin-bottom: 30px;">
+                    <h3><i class="fas fa-map-pin" style="color:var(--eu-blue);"></i> Haritaya Yeni Liman / Lojistik Üs Ekle</h3>
+                    <div style="display: flex; gap: 15px; margin-top: 15px;">
+                        <input type="text" class="cms-input" placeholder="Nokta Adı (Örn: Köstence Limanı)">
+                        <input type="text" class="cms-input" placeholder="Enlem (Lat: 44.15)">
+                        <input type="text" class="cms-input" placeholder="Boylam (Lon: 28.65)">
+                        <button class="btn-solid" style="width: auto; padding: 0 30px; white-space: nowrap;" onclick="alert('Liman haritaya başarıyla işlendi!')"><i class="fas fa-plus"></i> Ekle</button>
+                    </div>
+                </div>
+
+                <div class="glass-panel" style="padding: 30px;">
+                    <h3>Sistemdeki Aktif Harita Noktaları</h3>
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead><tr><th>Liman Adı</th><th>Enlem</th><th>Boylam</th><th>Rol</th><th style="text-align: right;">Aksiyon</th></tr></thead>
+                        <tbody>
+                            <tr>
+                                <td>Samsun Limanı (TR)</td><td>41.28</td><td>36.33</td>
+                                <td><span class="type-badge" style="background:#fecdd3; color:#b91c1c;">Lider Ortak</span></td>
+                                <td class="action-btns" style="text-align: right;"><button class="btn-edit"><i class="fas fa-edit"></i></button><button class="btn-del"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Varna Limanı (BG)</td><td>43.21</td><td>27.91</td>
+                                <td><span class="type-badge" style="background:#fef3c7; color:#d97706;">Ortak</span></td>
+                                <td class="action-btns" style="text-align: right;"><button class="btn-edit"><i class="fas fa-edit"></i></button><button class="btn-del"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                            <tr>
+                                <td>Odessa Limanı (UA)</td><td>46.48</td><td>30.73</td>
+                                <td><span class="type-badge type-news" style="background:#e2e8f0; color:#475569;">Standart</span></td>
+                                <td class="action-btns" style="text-align: right;"><button class="btn-edit"><i class="fas fa-edit"></i></button><button class="btn-del"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </main>
     </div>
 
     <script>
-        /* ARAYÜZ DİL SÖZLÜĞÜ (i18n Dictionary) */
-        const uiDictionary = {
-            tr: {
-                login_subtitle: "Ortak Ağ Yönetim Paneli", login_btn: "Giriş Yap",
-                menu_content: "İçerik Stüdyosu", menu_companies: "Firma Rehberi", menu_docs: "YZ Belgeleri", sys_active: "Sistem Aktif",
-                page_title: "İçerik Stüdyosu", form_title: "Yayın Verileri",
-                lbl_type: "İçerik Türü", opt_news: "Haber & Bülten", opt_event: "Etkinlik",
-                lbl_heading: "Başlık", lbl_body: "Gövde Metni",
-                form_media: "Medya", upload_title: "Fotoğraf Seç", btn_publish: "Canlıya Al"
-            },
-            en: {
-                login_subtitle: "Partner Network Admin Panel", login_btn: "Login",
-                menu_content: "Content Studio", menu_companies: "Company Directory", menu_docs: "AI Documents", sys_active: "System Active",
-                page_title: "Content Studio", form_title: "Publication Data",
-                lbl_type: "Content Type", opt_news: "News & Press", opt_event: "Event",
-                lbl_heading: "Title", lbl_body: "Body Text",
-                form_media: "Media", upload_title: "Select Photo", btn_publish: "Publish"
-            },
-            bg: {
-                login_subtitle: "Административен панел", login_btn: "Влизане",
-                menu_content: "Съдържание", menu_companies: "Фирмен указател", menu_docs: "AI Документи", sys_active: "Системата е активна",
-                page_title: "Студио за съдържание", form_title: "Данни за публикуване",
-                lbl_type: "Тип съдържание", opt_news: "Новини", opt_event: "Събитие",
-                lbl_heading: "Заглавие", lbl_body: "Основен текст",
-                form_media: "Медии", upload_title: "Изберете снимка", btn_publish: "Публикувай"
-            },
-            ge: {
-                login_subtitle: "ადმინისტრატორის პანელი", login_btn: "შესვლა",
-                menu_content: "კონტენტის სტუდია", menu_companies: "კომპანიების დირექტორია", menu_docs: "AI დოკუმენტები", sys_active: "სისტემა აქტიურია",
-                page_title: "კონტენტის სტუდია", form_title: "პუბლიკაციის მონაცემები",
-                lbl_type: "კონტენტის ტიპი", opt_news: "სიახლეები", opt_event: "ღონისძიება",
-                lbl_heading: "სათაური", lbl_body: "ტექსტი",
-                form_media: "მედია", upload_title: "აირჩიეთ ფოტო", btn_publish: "გამოქვეყნება"
-            }
-        };
-
-        // UI Dil Değiştirici Fonksiyon
-        function changeAdminUI(langCode) {
-            const elements = document.querySelectorAll('[data-i18n]');
-            elements.forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (uiDictionary[langCode][key]) {
-                    el.innerText = uiDictionary[langCode][key];
-                }
-            });
-        }
-
-        // Login Simülasyonu
         function initiateLogin() {
-            document.getElementById('auth-guard').style.display = 'none';
-            document.getElementById('workspace').style.display = 'flex';
+            const btn = document.getElementById('loginBtn');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Doğrulanıyor...';
+            setTimeout(() => {
+                document.getElementById('auth-guard').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('auth-guard').style.display = 'none';
+                    document.getElementById('workspace').style.display = 'flex';
+                }, 400);
+            }, 1000);
         }
 
-        function handleImagePreview(event) {
-            const file = event.target.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('preview-box');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                }
-                reader.readAsDataURL(file);
+        function switchView(viewId, element = null) {
+            // Aktif menü butonunu değiştir
+            if(element) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                element.classList.add('active');
+                // Sayfa başlığını güncelle
+                document.getElementById('pageMainTitle').innerText = element.innerText;
             }
+            
+            // Tüm sayfaları gizle, isteneni aç
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
         }
     </script>
 </body>
