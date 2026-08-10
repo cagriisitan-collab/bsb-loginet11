@@ -3,198 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSB-LOGINET Yönetici Paneli</title>
+    <title>BSB-LOGINET | Multi-Lang Secure CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e9ecef;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        /* GİRİŞ EKRANI TASARIMI */
-        #login-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .login-box {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 300px;
-        }
-        .login-box input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .login-box button {
-            width: 100%;
-            padding: 10px;
-            background-color: #003366;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .login-box button:hover { background-color: #00509e; }
-
-        /* YÖNETİCİ PANELİ TASARIMI (Başlangıçta Gizli) */
-        #dashboard-section {
-            display: none; /* Giriş yapılana kadar gizli kalacak */
-        }
-        .sidebar {
-            width: 250px;
-            background-color: #003366;
-            color: white;
-            position: fixed;
-            height: 100%;
-            padding-top: 20px;
-        }
-        .sidebar h2 { text-align: center; margin-bottom: 30px; font-size: 20px;}
-        .sidebar a {
-            padding: 15px 20px;
-            display: block;
-            color: white;
-            text-decoration: none;
-            border-bottom: 1px solid #004080;
-        }
-        .sidebar a:hover { background-color: #ff9900; color: black; }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
         
-        .main-content {
-            margin-left: 250px;
-            padding: 30px;
+        :root {
+            --bg-light: #f5f5f7; 
+            --panel-bg: rgba(255, 255, 255, 0.65);
+            --panel-border: rgba(255, 255, 255, 0.8);
+            --eu-blue: #003399;
+            --eu-gold: #FFCC00;
+            --text-main: #1d1d1f;
+            --text-muted: #86868b;
+            --input-bg: rgba(255, 255, 255, 0.5);
+            --input-border: rgba(0, 0, 0, 0.08);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+            --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.08);
         }
-        .header {
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 51, 153, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 204, 0, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
         }
-        .data-table {
-            width: 100%;
-            background: white;
-            border-collapse: collapse;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+
+        .glass-panel {
+            background: var(--panel-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--panel-border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-soft);
         }
-        .data-table th, .data-table td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+
+        /* GÜVENLİK GİRİŞ EKRANI */
+        #auth-guard {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-light); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-position: center;
         }
-        .data-table th { background-color: #f4f7f6; }
-        .add-btn {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
+        #auth-guard::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(245, 245, 247, 0.7); backdrop-filter: blur(10px); }
+        .login-card { position: relative; z-index: 10; width: 100%; max-width: 420px; padding: 40px; text-align: center; box-shadow: var(--shadow-float); }
+        .login-card h2 { font-family: 'Montserrat'; font-size: 24px; font-weight: 800; margin-bottom: 5px; letter-spacing: -0.5px; color: var(--text-main); }
+        .login-card h2 span { color: var(--eu-blue); }
+        .login-card p { color: var(--text-muted); font-size: 13px; margin-bottom: 30px; font-weight: 500; }
+        
+        .input-group { position: relative; margin-bottom: 20px; text-align: left; }
+        .input-group i { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); color: var(--text-muted); }
+        .input-group input { width: 100%; padding: 14px 14px 14px 45px; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 12px; color: var(--text-main); font-size: 14px; outline: none; transition: 0.3s; }
+        .input-group input:focus { background: white; border-color: var(--eu-blue); box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.1); }
+        
+        .btn-solid { width: 100%; padding: 14px; background: var(--eu-blue); color: white; border: none; border-radius: 12px; font-family: 'Montserrat'; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 14px rgba(0, 51, 153, 0.2); display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-solid:hover { background: #002266; transform: scale(0.98); }
+
+        /* ANA ÇALIŞMA ALANI */
+        #workspace { display: none; width: 100%; height: 100%; }
+        
+        /* SIDEBAR */
+        .sidebar { width: 280px; padding: 30px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--panel-border); background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px); }
+        .brand { font-family: 'Montserrat'; font-size: 20px; font-weight: 800; margin-bottom: 40px; padding-left: 10px; color: var(--text-main); letter-spacing: -0.5px;}
+        .brand span { color: var(--eu-blue); }
+        .nav-item { padding: 12px 15px; margin-bottom: 8px; border-radius: 12px; color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 12px; transition: 0.3s; cursor: pointer; }
+        .nav-item:hover, .nav-item.active { background: white; color: var(--eu-blue); box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        
+        .sys-status { margin-top: auto; padding: 15px; border-radius: 16px; background: white; border: 1px solid var(--panel-border); font-size: 11px; color: var(--text-muted); box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .status-dot { display: inline-block; width: 8px; height: 8px; background: #34c759; border-radius: 50%; margin-right: 5px; }
+
+        /* MAIN CONTENT */
+        .main-content { flex-grow: 1; padding: 40px 50px; overflow-y: auto; }
+        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .top-header h1 { font-family: 'Montserrat'; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+        
+        /* ARAYÜZ DİLİ DEĞİŞTİRİCİ (i18n) */
+        .ui-lang-select { 
+            background: var(--input-bg); border: 1px solid var(--input-border); 
+            padding: 8px 15px; border-radius: 12px; font-weight: 600; 
+            color: var(--text-main); outline: none; cursor: pointer;
         }
+
+        .user-profile { display: flex; align-items: center; gap: 15px; background: var(--panel-bg); padding: 6px 15px 6px 6px; border-radius: 30px; border: 1px solid var(--panel-border); box-shadow: var(--shadow-soft); backdrop-filter: blur(10px); }
+        .avatar { width: 36px; height: 36px; background: var(--eu-blue); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 14px; }
+        
+        /* FORM GRID */
+        .content-form { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        .form-section { padding: 35px; }
+        .form-section h3 { font-family: 'Montserrat'; font-size: 16px; font-weight: 600; margin-bottom: 25px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        
+        .field-group { margin-bottom: 25px; }
+        .field-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .cms-input, .cms-select, .cms-textarea { width: 100%; background: var(--input-bg); border: 1px solid var(--input-border); color: var(--text-main); border-radius: 12px; padding: 15px; font-size: 14px; outline: none; transition: 0.3s; font-family: 'Inter', sans-serif; }
+        .cms-input:focus, .cms-select:focus, .cms-textarea:focus { background: white; border-color: var(--eu-blue); box-shadow: 0 0 0 4px rgba(0, 51, 153, 0.05); }
+        .cms-textarea { min-height: 250px; resize: vertical; line-height: 1.6; }
+
+        /* UPLOAD ZONE */
+        .upload-zone { border: 2px dashed rgba(0,0,0,0.1); border-radius: 16px; padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; background: rgba(255,255,255,0.5); }
+        .upload-zone:hover { border-color: var(--eu-blue); background: white; }
+        .upload-zone i { font-size: 40px; color: var(--eu-blue); margin-bottom: 15px; opacity: 0.8; }
+        #preview-box { width: 100%; height: 200px; object-fit: cover; border-radius: 12px; margin-top: 20px; display: none; box-shadow: var(--shadow-soft); }
     </style>
 </head>
 <body>
 
-    <div id="login-section">
-        <div class="login-box">
-            <h2 style="color: #003366;">BSB-LOGINET CMS</h2>
-            <p style="font-size: 14px; color: #666;">Bölgesel Veri Giriş Portalı</p>
-            <input type="text" id="username" placeholder="Kullanıcı Adı (Örn: admin)">
-            <input type="password" id="password" placeholder="Şifre">
-            <button onclick="sistemeGirisYap()">Giriş Yap</button>
+    <!-- LOGIN -->
+    <div id="auth-guard">
+        <div class="login-card glass-panel">
+            <h2>BSB-LOGINET</h2>
+            <p data-i18n="login_subtitle">Ortak Ağ Yönetim Paneli</p>
+            <form onsubmit="event.preventDefault(); initiateLogin();">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="E-posta / Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Parola / Password" required>
+                </div>
+                <button type="submit" class="btn-solid" id="loginBtn" data-i18n="login_btn">Giriş Yap</button>
+            </form>
         </div>
     </div>
 
-    <div id="dashboard-section">
-        
-        <div class="sidebar">
-            <h2>Lojistik Yönetimi</h2>
-            <a href="#">📊 Ana Panel</a>
-            <a href="#">📝 Yeni Mevzuat Ekle</a>
-            <a href="#">🚢 Ulaşım Rotalarını Güncelle</a>
-            <a href="#">👥 Proje Ortakları (Yetkiler)</a>
-            <a href="#" onclick="cikisYap()" style="color: #ffcccc;">🚪 Çıkış Yap</a>
-        </div>
-
-        <div class="main-content">
-            <div class="header">
-                <h2>Hoş Geldiniz, Çağrı IŞITAN</h2>
-                <button class="add-btn">+ Yeni Veri/Haber Ekle</button>
+    <!-- WORKSPACE -->
+    <div id="workspace">
+        <!-- SIDEBAR -->
+        <nav class="sidebar">
+            <div class="brand">BSB<span>CMS</span></div>
+            <a class="nav-item active"><i class="fas fa-pen-nib"></i> <span data-i18n="menu_content">İçerik Stüdyosu</span></a>
+            <a class="nav-item"><i class="fas fa-building"></i> <span data-i18n="menu_companies">Firma Rehberi</span></a>
+            <a class="nav-item"><i class="fas fa-folder-open"></i> <span data-i18n="menu_docs">YZ Belgeleri</span></a>
+            
+            <div class="sys-status">
+                <div style="margin-bottom: 8px; color: var(--text-main); font-weight: 600;"><span class="status-dot"></span> <span data-i18n="sys_active">Sistem Aktif</span></div>
+                <div>Supabase DB | Serverless Edge</div>
             </div>
+        </nav>
 
-            <div style="background: white; padding: 20px; border-radius: 8px;">
-                <h3 style="margin-top: 0;">Son Eklenen Bölgesel Veriler</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Tarih</th>
-                            <th>Bölge / Kurum</th>
-                            <th>Ekleyen Personel</th>
-                            <th>Veri Başlığı / Kategori</th>
-                            <th>Durum</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>18 Haziran 2026</td>
-                            <td>Türkiye / Samsun TSO</td>
-                            <td>Damla</td>
-                            <td>Samsun Limanı Yeşil Lojistik Uygulamaları</td>
-                            <td><span style="color: green;">Yayında</span></td>
-                        </tr>
-                        <tr>
-                            <td>15 Haziran 2026</td>
-                            <td>Türkiye / Samsun TSO</td>
-                            <td>Esma</td>
-                            <td>Karadeniz Gümrük Tarife İstatistikleri</td>
-                            <td><span style="color: green;">Yayında</span></td>
-                        </tr>
-                        <tr>
-                            <td>10 Haziran 2026</td>
-                            <td>Bulgaristan / Varna</td>
-                            <td>Ivan Popov</td>
-                            <td>Sınır Kapısı Geçiş Prosedürleri (Güncelleme)</td>
-                            <td><span style="color: orange;">Onay Bekliyor</span></td>
-                        </tr>
-                        <tr>
-                            <td>05 Haziran 2026</td>
-                            <td>Gürcistan / Batum</td>
-                            <td>Giorgi K.</td>
-                            <td>Demiryolu Entegrasyon Raporu</td>
-                            <td><span style="color: green;">Yayında</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+        <!-- MAIN -->
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <h1 data-i18n="page_title">İçerik Stüdyosu</h1>
+                </div>
+                
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <!-- ARAYÜZ DİLİ SEÇİCİ (Ortaklar İçin) -->
+                    <select class="ui-lang-select" onchange="changeAdminUI(this.value)">
+                        <option value="tr">🇹🇷 Türkçe</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="bg">🇧🇬 Български</option>
+                        <option value="ge">🇬🇪 ქართული</option>
+                    </select>
+                    
+                    <div class="user-profile">
+                        <div class="avatar">A</div>
+                        <div style="font-size: 13px;">
+                            <div style="font-weight: 600;">Admin User</div>
+                        </div>
+                        <i class="fas fa-sign-out-alt" style="color: var(--text-muted); margin-left: 10px; cursor: pointer;" onclick="location.reload()"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-form">
+                
+                <div class="glass-panel form-section">
+                    <h3 style="color: var(--eu-blue);"><i class="fas fa-edit"></i> <span data-i18n="form_title">Yayın Verileri</span></h3>
+
+                    <div class="field-group">
+                        <label data-i18n="lbl_type">İçerik Türü</label>
+                        <select id="docType" class="cms-select">
+                            <option value="news" data-i18n="opt_news">Haber & Bülten</option>
+                            <option value="events" data-i18n="opt_event">Etkinlik</option>
+                        </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label data-i18n="lbl_heading">Başlık</label>
+                        <input type="text" id="docTitle" class="cms-input" placeholder="...">
+                    </div>
+
+                    <div class="field-group">
+                        <label data-i18n="lbl_body">Gövde Metni</label>
+                        <textarea id="docBody" class="cms-textarea" placeholder="..."></textarea>
+                    </div>
+                </div>
+
+                <div class="glass-panel form-section" style="height: fit-content;">
+                    <h3 style="color: var(--eu-blue);"><i class="fas fa-image"></i> <span data-i18n="form_media">Medya</span></h3>
+                    
+                    <div class="field-group">
+                        <div class="upload-zone" onclick="document.getElementById('fileUpload').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4 data-i18n="upload_title">Fotoğraf Seç</h4>
+                            <input type="file" id="fileUpload" style="display: none;" accept="image/*" onchange="handleImagePreview(event)">
+                        </div>
+                        <img id="preview-box">
+                    </div>
+
+                    <button class="btn-solid" style="margin-top: 20px;" onclick="alert('Veritabanına kaydedildi.')">
+                        <i class="fas fa-paper-plane"></i> <span data-i18n="btn_publish">Canlıya Al</span>
+                    </button>
+                </div>
+
             </div>
-        </div>
+        </main>
     </div>
 
     <script>
-        function sistemeGirisYap() {
-            // Şimdilik herhangi bir şifre kontrolü yapmadan doğrudan paneli açıyoruz
-            // Gerçek sistemde burada veritabanı kontrolü yapılır
-            document.getElementById('login-section').style.display = 'none';
-            document.getElementById('dashboard-section').style.display = 'block';
+        /* ARAYÜZ DİL SÖZLÜĞÜ (i18n Dictionary) */
+        const uiDictionary = {
+            tr: {
+                login_subtitle: "Ortak Ağ Yönetim Paneli", login_btn: "Giriş Yap",
+                menu_content: "İçerik Stüdyosu", menu_companies: "Firma Rehberi", menu_docs: "YZ Belgeleri", sys_active: "Sistem Aktif",
+                page_title: "İçerik Stüdyosu", form_title: "Yayın Verileri",
+                lbl_type: "İçerik Türü", opt_news: "Haber & Bülten", opt_event: "Etkinlik",
+                lbl_heading: "Başlık", lbl_body: "Gövde Metni",
+                form_media: "Medya", upload_title: "Fotoğraf Seç", btn_publish: "Canlıya Al"
+            },
+            en: {
+                login_subtitle: "Partner Network Admin Panel", login_btn: "Login",
+                menu_content: "Content Studio", menu_companies: "Company Directory", menu_docs: "AI Documents", sys_active: "System Active",
+                page_title: "Content Studio", form_title: "Publication Data",
+                lbl_type: "Content Type", opt_news: "News & Press", opt_event: "Event",
+                lbl_heading: "Title", lbl_body: "Body Text",
+                form_media: "Media", upload_title: "Select Photo", btn_publish: "Publish"
+            },
+            bg: {
+                login_subtitle: "Административен панел", login_btn: "Влизане",
+                menu_content: "Съдържание", menu_companies: "Фирмен указател", menu_docs: "AI Документи", sys_active: "Системата е активна",
+                page_title: "Студио за съдържание", form_title: "Данни за публикуване",
+                lbl_type: "Тип съдържание", opt_news: "Новини", opt_event: "Събитие",
+                lbl_heading: "Заглавие", lbl_body: "Основен текст",
+                form_media: "Медии", upload_title: "Изберете снимка", btn_publish: "Публикувай"
+            },
+            ge: {
+                login_subtitle: "ადმინისტრატორის პანელი", login_btn: "შესვლა",
+                menu_content: "კონტენტის სტუდია", menu_companies: "კომპანიების დირექტორია", menu_docs: "AI დოკუმენტები", sys_active: "სისტემა აქტიურია",
+                page_title: "კონტენტის სტუდია", form_title: "პუბლიკაციის მონაცემები",
+                lbl_type: "კონტენტის ტიპი", opt_news: "სიახლეები", opt_event: "ღონისძიება",
+                lbl_heading: "სათაური", lbl_body: "ტექსტი",
+                form_media: "მედია", upload_title: "აირჩიეთ ფოტო", btn_publish: "გამოქვეყნება"
+            }
+        };
+
+        // UI Dil Değiştirici Fonksiyon
+        function changeAdminUI(langCode) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (uiDictionary[langCode][key]) {
+                    el.innerText = uiDictionary[langCode][key];
+                }
+            });
         }
 
-        function cikisYap() {
-            // Paneli gizle, giriş ekranını geri getir
-            document.getElementById('dashboard-section').style.display = 'none';
-            document.getElementById('login-section').style.display = 'flex';
+        // Login Simülasyonu
+        function initiateLogin() {
+            document.getElementById('auth-guard').style.display = 'none';
+            document.getElementById('workspace').style.display = 'flex';
+        }
+
+        function handleImagePreview(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('preview-box');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            }
         }
     </script>
 </body>
