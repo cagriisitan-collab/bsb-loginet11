@@ -75,7 +75,7 @@
             letter-spacing: 1px;
         }
 
-        .desktop-nav { display: flex; gap: 10px; align-items: center; }
+        .desktop-nav { display: flex; gap: 8px; align-items: center; }
         .desktop-nav a {
             text-decoration: none;
             color: var(--text-dark);
@@ -223,7 +223,7 @@
 
         .carousel-container {
             position: relative; border-radius: 12px; overflow: hidden; height: 280px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; background: #cbd5e1;
         }
         .carousel-slide {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -311,7 +311,7 @@
 </head>
 <body>
 
-    <!-- KURUMSAL BAŞLIK -->
+    <!-- KURUMSAL BAŞLIK VE GÜNCELLENMİŞ MENÜ -->
     <header class="header">
         <div class="logo-group">
             <div class="eu-flag"><i class="fas fa-flag-eu"></i></div>
@@ -319,11 +319,13 @@
         </div>
         
         <nav class="desktop-nav">
-            <a href="#" class="active"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="index.html" class="active"><i class="fas fa-home"></i> Ana Sayfa</a>
             <a onclick="openAiWorkspace()" class="btn-ai"><i class="fas fa-robot"></i> Gümrük Asistanı</a>
-            <a href="bsb-connect.html" class="btn-b2b"><i class="fas fa-handshake"></i> B2B</a>
-            <a href="#"><i class="fas fa-route"></i> CO2 Rota Aracı</a>
-            <a href="#"><i class="fas fa-book"></i> Bilgi Bankası</a>
+            <a href="b2b.html" class="btn-b2b"><i class="fas fa-handshake"></i> B2B</a>
+            <a href="rota.html"><i class="fas fa-route"></i> Rota Aracı</a>
+            <a href="bilgi-bankasi.html"><i class="fas fa-book"></i> Bilgi Bankası</a>
+            <!-- Google Translate Widget -->
+            <div id="google_translate_element" style="margin-left: 10px;"></div>
         </nav>
         
         <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
@@ -357,7 +359,7 @@
         </div>
     </div>
 
-    <!-- 2. BÖLÜM: HABERLER VE ETKİNLİKLER YAN YANA -->
+    <!-- 2. BÖLÜM: HABERLER VE ETKİNLİKLER (CMS'DEN DİNAMİK BESLENİR) -->
     <section class="content-grid-section">
         
         <!-- HABERLER KARTI -->
@@ -367,11 +369,11 @@
                 <a href="haberler.html" class="view-all-link">Tüm Haberler <i class="fas fa-arrow-right"></i></a>
             </div>
             
-            <div class="carousel-container" onclick="location.href='haber-detay.html?id=1'">
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1494412519320-aa3da6e05a8d?auto=format&fit=crop&q=80&w=800');">
+            <div class="carousel-container" id="publicNewsContainer" onclick="location.href='haber-detay.html?id=1'">
+                <div class="carousel-slide" id="newsSlide" style="background-image: url('https://images.unsplash.com/photo-1494412519320-aa3da6e05a8d?auto=format&fit=crop&q=80&w=800');">
                     <div class="slide-content">
-                        <span class="slide-date">12 Haziran 2026</span>
-                        <div class="slide-title">Lojistik İhtiyaç Analizi Odak Grup Toplantısı Samsun'da Gerçekleşti</div>
+                        <span class="slide-date" id="newsDate">12 Haziran 2026</span>
+                        <div class="slide-title" id="newsTitle">Lojistik İhtiyaç Analizi Odak Grup Toplantısı Samsun'da Gerçekleşti</div>
                     </div>
                 </div>
             </div>
@@ -384,11 +386,11 @@
                 <a href="etkinlikler.html" class="view-all-link">Tüm Etkinlikler <i class="fas fa-arrow-right"></i></a>
             </div>
             
-            <div class="carousel-container" onclick="location.href='etkinlik-detay.html?id=1'">
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800');">
+            <div class="carousel-container" id="publicEventsContainer" onclick="location.href='etkinlik-detay.html?id=1'">
+                <div class="carousel-slide" id="eventSlide" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800');">
                     <div class="slide-content">
-                        <span class="slide-date" style="background: #fef3c7; color: #d97706;">28 Temmuz 2026</span>
-                        <div class="slide-title">Dijital Beceriler ve Yeşil Lojistik Çevrim İçi Atölye Çalışması</div>
+                        <span class="slide-date" id="eventDate" style="background: #fef3c7; color: #d97706;">28 Temmuz 2026</span>
+                        <div class="slide-title" id="eventTitle">Dijital Beceriler ve Yeşil Lojistik Çevrim İçi Atölye Çalışması</div>
                     </div>
                 </div>
             </div>
@@ -433,6 +435,18 @@
         </div>
     </footer>
 
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'tr', 
+                includedLanguages: 'en,bg,ka,ro,uk,ru',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <!-- MAP & UI SCRIPT -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"></script>
     <script>
@@ -447,8 +461,8 @@
             ],
             interactions: ol.interaction.defaults.defaults({mouseWheelZoom: false}),
             view: new ol.View({
-                center: ol.proj.fromLonLat([31.5, 43.5]), // Zoom out yapılarak yukarı kaydırıldı, Odessa tam görünür hale geldi
-                zoom: 5.7, // Daha geniş açılı görünüm
+                center: ol.proj.fromLonLat([31.5, 43.5]),
+                zoom: 5.7,
                 minZoom: 5.0,
                 maxZoom: 10,
                 extent: marmaraBlackSeaExtent
@@ -464,16 +478,15 @@
             });
         });
 
-        // --- GERÇEKÇİ ANİMASYONLU DENİZ ROTALARI (Varna-Samsun kaldırıldı, gerçek hatlar korundu) ---
         const routeSource = new ol.source.Vector();
         const routeLayer = new ol.layer.Vector({ source: routeSource, zIndex: 5 });
         map.addLayer(routeLayer);
 
         const seaRoutesCoords = [
-            [[36.33, 41.28], [41.63, 41.61]], // Samsun - Batum (Ana Ortak Hattı)
-            [[28.70, 40.97], [27.91, 43.21]], // İstanbul - Varna
-            [[28.65, 44.15], [30.73, 46.48]], // Köstence - Odessa
-            [[36.33, 41.28], [37.78, 44.72]]  // Samsun - Novorossiysk
+            [[36.33, 41.28], [41.63, 41.61]], 
+            [[28.70, 40.97], [27.91, 43.21]], 
+            [[28.65, 44.15], [30.73, 46.48]], 
+            [[36.33, 41.28], [37.78, 44.72]]  
         ];
 
         const animatedRouteStyle = new ol.style.Style({
@@ -500,14 +513,11 @@
         }
         animateNeonRoutes();
 
-        // Liman Verileri (Samsun: Tam Kırmızı, Beyaz Çapa | Batum: Tam Beyaz, Kırmızı Çapa)
         const portsData = [
-            // --- PROJE ORTAKLARI ---
-            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#E30A17", strokeColor: "#FFFFFF" }, // Tam Kırmızı Top, Beyaz Çapa
+            { name: "Samsun Limanı (TR - Lider Ortak)", lon: 36.33, lat: 41.28, type: "partner", fillColor: "#E30A17", strokeColor: "#FFFFFF" },
             { name: "Varna Limanı (BG - Ortak)", lon: 27.91, lat: 43.21, type: "partner", fillColor: "#00966E", strokeColor: "#D62612" }, 
-            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FFFFFF", strokeColor: "#E30A17" }, // Tam Beyaz Top, Kırmızı Çapa
+            { name: "Batum Limanı (GE - Ortak)", lon: 41.63, lat: 41.61, type: "partner", fillColor: "#FFFFFF", strokeColor: "#E30A17" },
 
-            // --- DİĞER LİMANLAR ---
             { name: "Ambarlı Limanı / İstanbul", lon: 28.70, lat: 40.97, type: "std" },
             { name: "Haydarpaşa Limanı / İstanbul", lon: 29.02, lat: 40.99, type: "std" },
             { name: "Tekirdağ / Asyaport Limanı", lon: 27.45, lat: 40.98, type: "std" },
@@ -550,7 +560,6 @@
             let strokeColor = port.type === "partner" ? port.strokeColor : '#FFCC00';
             let radiusSize = port.type === "partner" ? 15 : 12;
             
-            // Samsun (Kırmızı top -> Beyaz çapa) vs Batum (Beyaz top -> Kırmızı çapa)
             let anchorColor = '#FFFFFF';
             if (port.name.includes("Batum")) {
                 anchorColor = '#E30A17';
@@ -623,6 +632,33 @@
                 box.scrollTop = box.scrollHeight;
             }, 800);
         }
+
+        // --- CMS (LOCALSTORAGE) DİNAMİK İÇERİK BAĞLANTISI ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Haberleri Çek
+            const newsDb = JSON.parse(localStorage.getItem('bsb_news')) || [];
+            if(newsDb.length > 0) {
+                const latestNews = newsDb[0];
+                const title = latestNews.title || latestNews.translations?.tr?.title || 'Güncel Duyuru';
+                const date = latestNews.date || '12 Haziran 2026';
+                const imgSrc = latestNews.image && latestNews.image.startsWith('data:') ? latestNews.image : 'https://images.unsplash.com/photo-1494412519320-aa3da6e05a8d?auto=format&fit=crop&q=80&w=800';
+
+                document.getElementById('newsTitle').innerText = title;
+                document.getElementById('newsDate').innerText = date;
+                document.getElementById('newsSlide').style.backgroundImage = `url('${imgSrc}')`;
+            }
+
+            // Etkinlikleri Çek
+            const eventDb = JSON.parse(localStorage.getItem('bsb_events')) || [];
+            if(eventDb.length > 0) {
+                const latestEvent = eventDb[0];
+                const title = latestEvent.title || latestEvent.translations?.tr?.title || 'Yaklaşan Etkinlik';
+                const date = latestEvent.date || '28 Temmuz 2026';
+
+                document.getElementById('eventTitle').innerText = title;
+                document.getElementById('eventDate').innerText = date;
+            }
+        });
     </script>
 </body>
 </html>
