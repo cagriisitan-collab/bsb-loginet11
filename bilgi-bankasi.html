@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSB-LOGINET | Bilgi Bankası & Kütüphane</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+        :root { --eu-blue: #003399; --eu-gold: #FFCC00; --bg-gray: #F4F7F9; --white: #FFFFFF; --border-color: #E2E8F0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-gray); color: #1E293B; line-height: 1.6; }
+        .header { background: var(--white); height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; box-shadow: 0 4px 15px rgba(0, 51, 153, 0.08); }
+        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 800; color: var(--eu-blue); }
+        .desktop-nav a { text-decoration: none; color: #1E293B; font-weight: 600; font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-left: 5px; }
+        .desktop-nav a:hover { background: #E6F0FA; color: var(--eu-blue); }
+        
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 5%; }
+        .card { background: var(--white); padding: 30px; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); }
+        h1 { font-family: 'Montserrat', sans-serif; font-size: 26px; color: var(--eu-blue); margin-bottom: 20px; }
+        
+        .doc-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .doc-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-gray); padding: 15px 20px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .doc-title { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .download-btn { background: var(--eu-blue); color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+        .download-btn:hover { background: #002266; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-text">BSB-LOGINET Kütüphane</div>
+        <nav class="desktop-nav">
+            <a href="index.html"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="asistan.html">Gümrük Asistanı</a>
+            <a href="b2b.html">B2B</a>
+            <a href="rota.html">Rota Aracı</a>
+            <a href="bilgi-bankasi.html" style="background:#E6F0FA; color:var(--eu-blue);">Bilgi Bankası</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h1><i class="fas fa-folder-open" style="color:var(--eu-gold);"></i> Dijital Bilgi Bankası & Mevzuat</h1>
+            <p style="font-size: 14px; color: #64748B;">Proje ortakları tarafından yüklenen resmi PDF ve Word formatındaki dış ticaret kılavuzları.</p>
+            
+            <div class="doc-list">
+                <div class="doc-item">
+                    <div class="doc-title"><i class="fas fa-file-pdf" style="color: #ef4444; font-size: 18px;"></i> 2026 AB Gümrük ve Lojistik Regülasyonları Kılavuzu.pdf</div>
+                    <a href="#" class="download-btn"><i class="fas fa-download"></i> İndir</a>
+                </div>
+                <div class="doc-item">
+                    <div class="doc-title"><i class="fas fa-file-word" style="color: #2563eb; font-size: 18px;"></i> Samsun TSO Bölgesel İhtiyaç Analizi Raporu.docx</div>
+                    <a href="#" class="download-btn"><i class="fas fa-download"></i> İndir</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
