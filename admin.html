@@ -141,7 +141,9 @@
 
         <div class="login-card glass-panel" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(30px);">
             <h2>BSB-LOGINET</h2>
-            <p data-i18n="login_subtitle" style="color: rgba(255,255,255,0.8);">Samsun TSO Yönetim Ağı</p>
+            <!-- DİNAMİK CMS ALT BAŞLIĞI -->
+            <p data-i18n="login_subtitle" style="color: rgba(255,255,255,0.8);">İçerik Yönetim Sistemi</p>
+            
             <form onsubmit="event.preventDefault(); initiateLogin();">
                 <div class="input-group">
                     <i class="fas fa-envelope" style="color: rgba(255,255,255,0.6);"></i>
@@ -152,7 +154,7 @@
                     <input type="password" id="loginPass" data-i18n-ph="login_pass" placeholder="Parola" style="background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.2);" required>
                 </div>
                 <button type="submit" class="btn-solid" id="loginBtn">
-                    <i class="fas fa-shield-alt"></i> <span data-i18n="login_btn">Güvenli Giriş Yap</span>
+                    <i class="fas fa-shield-alt"></i> <span data-i18n="login_btn">Giriş Yap</span>
                 </button>
             </form>
         </div>
@@ -189,7 +191,7 @@
                 </div>
             </header>
 
-            <!-- C1. FIRMA REHBERİ LİSTESİ (Salt Okunur Mimarisi) -->
+            <!-- C1. FIRMA REHBERİ LİSTESİ -->
             <div id="view-companies" class="view-section active">
                 <div class="glass-panel" style="padding: 30px;">
                     <div class="data-header">
@@ -203,10 +205,10 @@
                     <div style="display: flex; gap: 15px; margin-bottom: 20px;">
                         <input type="text" class="cms-input" data-i18n-ph="ph_search" placeholder="Firma unvanına göre ara..." style="flex: 1;">
                         <select class="cms-select" style="width: 250px;">
-                            <option>Tüm Ülkeler</option>
-                            <option>Türkiye</option>
-                            <option>Bulgaristan</option>
-                            <option>Gürcistan</option>
+                            <option data-i18n="opt_all_countries">Tüm Ülkeler</option>
+                            <option data-i18n="opt_tr">Türkiye</option>
+                            <option data-i18n="opt_bg">Bulgaristan</option>
+                            <option data-i18n="opt_ge">Gürcistan</option>
                         </select>
                     </div>
 
@@ -240,18 +242,16 @@
                 </div>
             </div>
 
-            <!-- C2. FİRMA EKLEME FORMU (Şartnameye Tam Uygun) -->
+            <!-- C2. FİRMA EKLEME FORMU (Açılır Menüler İle) -->
             <div id="view-company-form" class="view-section">
                 <div class="data-header">
                     <button class="add-btn" style="background: white; color: var(--eu-blue); border: 1px solid var(--eu-blue);" onclick="switchView('view-companies')"><i class="fas fa-arrow-left"></i> <span data-i18n="btn_back">Listeye Dön</span></button>
                 </div>
                 
-                <!-- Tek Parça, Şartname Odaklı Temiz Form -->
                 <div class="glass-panel" style="padding: 40px; max-width: 900px; margin: 0 auto;">
                     <h3 style="margin-bottom: 30px; color: var(--eu-blue); border-bottom: 2px solid var(--input-border); padding-bottom: 15px;"><i class="fas fa-building"></i> <span data-i18n="form_company_title">Kurumsal Firma Kaydı</span></h3>
                     
                     <div class="form-grid">
-                        <!-- Sol Kolon -->
                         <div>
                             <div class="field-group">
                                 <label data-i18n="lbl_comp_name">Firma Resmi Unvanı</label>
@@ -270,16 +270,25 @@
                             </div>
                         </div>
 
-                        <!-- Sağ Kolon -->
                         <div>
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <!-- ÜLKE SEÇİMİ (AÇILIR MENÜ) -->
                                 <div class="field-group">
                                     <label data-i18n="lbl_country">Ülke</label>
-                                    <input type="text" class="cms-input" placeholder="Türkiye">
+                                    <select class="cms-select">
+                                        <option data-i18n="opt_tr">Türkiye</option>
+                                        <option data-i18n="opt_bg">Bulgaristan</option>
+                                        <option data-i18n="opt_ge">Gürcistan</option>
+                                    </select>
                                 </div>
+                                <!-- ŞEHİR SEÇİMİ (AÇILIR MENÜ) -->
                                 <div class="field-group">
                                     <label data-i18n="lbl_city">Şehir</label>
-                                    <input type="text" class="cms-input" placeholder="Samsun">
+                                    <select class="cms-select">
+                                        <option data-i18n="opt_sam">Samsun</option>
+                                        <option data-i18n="opt_var">Varna</option>
+                                        <option data-i18n="opt_bat">Batum</option>
+                                    </select>
                                 </div>
                             </div>
                             
@@ -299,48 +308,48 @@
                     <button class="btn-solid" style="margin-top: 20px; width: 100%; height: 50px; font-size: 15px;" onclick="alert('Firma veritabanına kaydedildi!'); switchView('view-companies');">
                         <i class="fas fa-save"></i> <span data-i18n="btn_save_comp">Firmayı Kaydet</span>
                     </button>
-                    <p style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 15px;">
-                        Eklenen firmalar dışarıdan müdahaleye kapalı şekilde salt-okunur (read-only) olarak listelenecektir.
-                    </p>
                 </div>
             </div>
 
-            <!-- Diğer View Alanları (Gizli) -->
             <div id="view-content-list" class="view-section"></div>
             <div id="view-map-manage" class="view-section"></div>
         </main>
     </div>
 
     <script>
-        // i18n Sözlük
+        // i18n Sözlük (Güncellendi)
         const uiDictionary = {
             tr: { 
-                login_subtitle: "Samsun TSO Yönetim Ağı", login_email: "Yönetici E-posta", login_pass: "Parola", login_btn: "Giriş Yap", 
+                login_subtitle: "İçerik Yönetim Sistemi", login_email: "Yönetici E-posta", login_pass: "Parola", login_btn: "Giriş Yap", 
                 menu_content: "İçerik Yönetimi", menu_map: "Harita & Rotalar", menu_companies: "Firma Rehberi", menu_ai: "YZ Bilgi Bankası", logout_btn: "Çıkış Yap", 
                 company_list_title: "Kayıtlı Lojistik Firmaları", btn_add_new: "Yeni Firma Ekle", btn_export: "Dışa Aktar (CSV)",
                 ph_search: "Firma unvanına göre ara...", th_company: "Firma Unvanı", th_location: "Ülke/Şehir", th_activity: "Faaliyet Alanı", th_contact: "İletişim (Web/Tel)", th_action: "Aksiyon",
-                btn_back: "Listeye Dön", form_company_title: "Kurumsal Firma Kaydı", lbl_comp_name: "Firma Resmi Unvanı", lbl_activity: "Lojistik Faaliyet Alanı (Sektör)", lbl_country: "Ülke", lbl_city: "Şehir", lbl_web: "Kurumsal Web Sitesi", lbl_phone: "Sabit Telefon", btn_save_comp: "Firmayı Kaydet"
+                btn_back: "Listeye Dön", form_company_title: "Kurumsal Firma Kaydı", lbl_comp_name: "Firma Resmi Unvanı", lbl_activity: "Lojistik Faaliyet Alanı (Sektör)", lbl_country: "Ülke", lbl_city: "Şehir", lbl_web: "Kurumsal Web Sitesi", lbl_phone: "Sabit Telefon", btn_save_comp: "Firmayı Kaydet",
+                opt_tr: "Türkiye", opt_bg: "Bulgaristan", opt_ge: "Gürcistan", opt_sam: "Samsun", opt_var: "Varna", opt_bat: "Batum", opt_all_countries: "Tüm Ülkeler"
             },
             en: { 
-                login_subtitle: "Admin Network", login_email: "Admin Email", login_pass: "Password", login_btn: "Login", 
+                login_subtitle: "Content Management System", login_email: "Admin Email", login_pass: "Password", login_btn: "Login", 
                 menu_content: "Content Management", menu_map: "Maps & Routes", menu_companies: "Company Directory", menu_ai: "AI Knowledge Base", logout_btn: "Log Out", 
                 company_list_title: "Registered Companies", btn_add_new: "Add New Company", btn_export: "Export (CSV)",
                 ph_search: "Search by company name...", th_company: "Company Name", th_location: "Country/City", th_activity: "Activity Area", th_contact: "Contact (Web/Phone)", th_action: "Action",
-                btn_back: "Back to List", form_company_title: "Company Registration", lbl_comp_name: "Official Company Name", lbl_activity: "Logistics Activity Area", lbl_country: "Country", lbl_city: "City", lbl_web: "Website", lbl_phone: "Phone", btn_save_comp: "Save Company"
+                btn_back: "Back to List", form_company_title: "Company Registration", lbl_comp_name: "Official Company Name", lbl_activity: "Logistics Activity Area", lbl_country: "Country", lbl_city: "City", lbl_web: "Website", lbl_phone: "Phone", btn_save_comp: "Save Company",
+                opt_tr: "Turkey", opt_bg: "Bulgaria", opt_ge: "Georgia", opt_sam: "Samsun", opt_var: "Varna", opt_bat: "Batumi", opt_all_countries: "All Countries"
             },
             bg: { 
-                login_subtitle: "Административна мрежа", login_email: "Имейл", login_pass: "Парола", login_btn: "Влизане", 
+                login_subtitle: "Система за управление на съдържанието", login_email: "Имейл", login_pass: "Парола", login_btn: "Влизане", 
                 menu_content: "Съдържание", menu_map: "Карти", menu_companies: "Указател", menu_ai: "AI База", logout_btn: "Изход", 
                 company_list_title: "Регистрирани компании", btn_add_new: "Добави фирма", btn_export: "Експорт (CSV)",
                 ph_search: "Търсене по име...", th_company: "Име на фирмата", th_location: "Държава/Град", th_activity: "Сектор", th_contact: "Контакти", th_action: "Действие",
-                btn_back: "Назад", form_company_title: "Регистрация на фирма", lbl_comp_name: "Официално име", lbl_activity: "Логистичен сектор", lbl_country: "Държава", lbl_city: "Град", lbl_web: "Уебсайт", lbl_phone: "Телефон", btn_save_comp: "Запази фирмата"
+                btn_back: "Назад", form_company_title: "Регистрация на фирма", lbl_comp_name: "Официално име", lbl_activity: "Логистичен сектор", lbl_country: "Държава", lbl_city: "Град", lbl_web: "Уебсайт", lbl_phone: "Телефон", btn_save_comp: "Запази фирмата",
+                opt_tr: "Турция", opt_bg: "България", opt_ge: "Грузия", opt_sam: "Самсун", opt_var: "Варна", opt_bat: "Батуми", opt_all_countries: "Всички държави"
             },
             ge: { 
-                login_subtitle: "ადმინისტრატორის ქსელი", login_email: "ელ.ფოსტა", login_pass: "პაროლი", login_btn: "შესვლა", 
+                login_subtitle: "კონტენტის მართვის სისტემა", login_email: "ელ.ფოსტა", login_pass: "პაროლი", login_btn: "შესვლა", 
                 menu_content: "კონტენტის მართვა", menu_map: "რუკები", menu_companies: "დირექტორია", menu_ai: "AI ბაზა", logout_btn: "გამოსვლა", 
                 company_list_title: "რეგისტრირებული კომპანიები", btn_add_new: "კომპანიის დამატება", btn_export: "ექსპორტი (CSV)",
                 ph_search: "ძიება...", th_company: "კომპანიის სახელი", th_location: "ქვეყანა/ქალაქი", th_activity: "სფერო", th_contact: "კონტაქტი", th_action: "მოქმედება",
-                btn_back: "უკან დაბრუნება", form_company_title: "კომპანიის რეგისტრაცია", lbl_comp_name: "ოფიციალური სახელი", lbl_activity: "ლოჯისტიკური სფერო", lbl_country: "ქვეყანა", lbl_city: "ქალაქი", lbl_web: "ვებსაიტი", lbl_phone: "ტელეფონი", btn_save_comp: "შენახვა"
+                btn_back: "უკან დაბრუნება", form_company_title: "კომპანიის რეგისტრაცია", lbl_comp_name: "ოფიციალური სახელი", lbl_activity: "ლოჯისტიკური სფერო", lbl_country: "ქვეყანა", lbl_city: "ქალაქი", lbl_web: "ვებსაიტი", lbl_phone: "ტელეფონი", btn_save_comp: "შენახვა",
+                opt_tr: "თურქეთი", opt_bg: "ბულგარეთი", opt_ge: "საქართველო", opt_sam: "სამსუნი", opt_var: "ვარნა", opt_bat: "ბათუმი", opt_all_countries: "ყველა ქვეყანა"
             }
         };
 
@@ -364,7 +373,6 @@
             if(activeMenu) document.getElementById('pageMainTitle').innerText = activeMenu.innerText;
         }
 
-        // Login Simülasyonu
         function initiateLogin() {
             const btn = document.getElementById('loginBtn');
             const originalText = btn.innerHTML;
