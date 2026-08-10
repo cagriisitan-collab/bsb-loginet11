@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSB-LOGINET | Multimodal Rota ve CO2 Hesaplama Aracı</title>
+    
+    <!-- FontAwesome & Leaflet CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --eu-blue: #003399;
+            --eu-gold: #FFCC00;
+            --eu-light-blue: #E6F0FA;
+            --text-dark: #1E293B;
+            --text-muted: #64748B;
+            --bg-gray: #F4F7F9;
+            --white: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-gray); color: var(--text-dark); line-height: 1.6; }
+
+        /* HEADER & MENU */
+        .header { background: var(--white); height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; box-shadow: 0 4px 15px rgba(0, 51, 153, 0.08); }
+        .logo-text { font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 800; color: var(--eu-blue); }
+        .desktop-nav a { text-decoration: none; color: #1E293B; font-weight: 600; font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-left: 5px; display: inline-flex; align-items: center; gap: 6px; }
+        .desktop-nav a:hover { background: #E6F0FA; color: var(--eu-blue); }
+
+        /* ANA İÇERİK LAYOUT */
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; }
+        .route-card { background: var(--white); padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-top: 4px solid var(--eu-blue); }
+        .route-card h1 { font-family: 'Montserrat', sans-serif; font-size: 22px; color: var(--eu-blue); margin-bottom: 15px; }
+        
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; background: var(--bg-gray); outline: none; }
+        .form-control:focus { border-color: var(--eu-blue); background: var(--white); }
+        
+        .btn-calc { background: var(--eu-blue); color: var(--white); border: none; width: 100%; padding: 15px; border-radius: 8px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; font-size: 15px; }
+        .btn-calc:hover { background: #002266; }
+
+        /* HARİTA ALANI */
+        .map-container { background: #cbd5e1; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; min-height: 500px; }
+        #logisticsMap { width: 100%; height: 100%; min-height: 500px; }
+        .map-overlay { position: absolute; top: 20px; right: 20px; z-index: 999; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: none; width: 280px; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-text"><i class="fas fa-route"></i> BSB-LOGINET Rota Aracı</div>
+        <nav class="desktop-nav">
+            <a href="index.html"><i class="fas fa-home"></i> Ana Sayfa</a>
+            <a href="asistan.html"><i class="fas fa-brain"></i> Gümrük Asistanı</a>
+            <a href="b2b.html"><i class="fas fa-handshake"></i> B2B</a>
+            <a href="rota.html" style="background:#E6F0FA; color:var(--eu-blue);"><i class="fas fa-route"></i> Rota Aracı</a>
+            <a href="bilgi-bankasi.html"><i class="fas fa-folder-open"></i> Bilgi Bankası</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Rota Formu -->
+        <div class="route-card">
+            <h1><i class="fas fa-leaf" style="color:#10b981;"></i> Multimodal Rota & CO2 Analizi</h1>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px;">AB Yeşil Mutabakat standartlarında taşıma modlarına göre en uygun rotayı çizin ve karbon ayak izinizi hesaplayın.</p>
+            
+            <div class="form-group">
+                <label>Çıkış Noktası (Origin)</label>
+                <input type="text" id="routeStart" class="form-control" value="Samsun Limanı, TR">
+            </div>
+            
+            <div class="form-group">
+                <label>Varış Noktası (Destination)</label>
+                <input type="text" id="routeEnd" class="form-control" value="Varna Limanı, BG">
+            </div>
+            
+            <div class="form-group">
+                <label>Taşıma Modu Kombinasyonu</label>
+                <select id="routeMode" class="form-control">
+                    <option value="sea">⚓ Denizyolu (Ro-Ro / Gemi)</option>
+                    <option value="land">🚛 Karayolu (TIR Koridoru)</option>
+                    <option value="rail">🚆 Demiryolu Bağlantısı</option>
+                    <option value="multi">🔄 Multimodal (Kara + Deniz Kombine)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Araç Tipi ve Yük Kapasitesi</label>
+                <select id="routeVehicle" class="form-control">
+                    <option>Ağır Vasıta (TIR - EURO 6 Standart)</option>
+                    <option>40ft Konteyner Gemisi (TEU)</option>
+                    <option>Hafif Ticari / Kamyonet</option>
+                </select>
+            </div>
+
+            <button class="btn-calc" onclick="calculateRoute()"><i class="fas fa-calculator"></i> Rotayı Hesapla ve CO2 Raporla</button>
+        </div>
+
+        <!-- Açık Kaynak Harita ve Rapor -->
+        <div class="map-container">
+            <div id="logisticsMap"></div>
+            
+            <div class="map-overlay" id="routeResult">
+                <h4 style="color: var(--eu-blue); font-size: 15px; margin-bottom: 12px; border-bottom: 2px solid #E2E8F0; padding-bottom: 6px;">AB Standart Rota Raporu</h4>
+                <div style="font-size: 13px; margin-bottom: 8px;"><i class="fas fa-ruler-horizontal" style="color:var(--eu-blue);"></i> Mesafe: <strong>485 km</strong></div>
+                <div style="font-size: 13px; margin-bottom: 8px;"><i class="fas fa-clock" style="color:var(--eu-blue);"></i> Süre: <strong>32 Saat (Operasyon Dahil)</strong></div>
+                <div style="font-size: 13px; margin-bottom: 8px;"><i class="fas fa-exchange-alt" style="color:var(--eu-blue);"></i> Mod: <strong id="selectedModeText">Denizyolu (Ro-Ro)</strong></div>
+                <div style="font-size: 13px; color: #ef4444;"><i class="fas fa-cloud"></i> CO2 Salınımı: <strong>412 kg</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet.js Script -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Harita Başlatma
+        var map = L.map('logisticsMap').setView([43.5, 34.5], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+            maxZoom: 18, 
+            attribution: '&copy; OpenStreetMap & BSB-LOGINET' 
+        }).addTo(map);
+
+        // Örnek Lokasyon İşaretleri
+        L.marker([41.2867, 36.33]).addTo(map).bindPopup("<b>Samsun Limanı (TR)</b>");
+        L.marker([43.2141, 27.9147]).addTo(map).bindPopup("<b>Varna Limanı (BG)</b>");
+
+        var currentPolyline = null;
+
+        // Rota Hesaplama Simülasyonu
+        function calculateRoute() {
+            const btn = document.querySelector('.btn-calc');
+            const modeSelect = document.getElementById('routeMode');
+            document.getElementById('selectedModeText').innerText = modeSelect.options[modeSelect.selectedIndex].text;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Rota Optimizasyonu Yapılıyor...';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-calculator"></i> Rotayı Hesapla ve CO2 Raporla';
+                
+                if(currentPolyline) {
+                    map.removeLayer(currentPolyline);
+                }
+
+                // Dinamik Çizgi Rota Simülasyonu
+                var latlngs = [ [41.2867, 36.33], [42.5, 33.0], [43.2141, 27.9147] ];
+                currentPolyline = L.polyline(latlngs, {color: '#003399', weight: 5, opacity: 0.8, dashArray: '10, 10'}).addTo(map);
+                map.fitBounds(currentPolyline.getBounds());
+
+                // Sonuç Kutusunu Göster
+                document.getElementById('routeResult').style.display = 'block';
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
